@@ -24,8 +24,8 @@
 - Timer functionality to be able to start a timer for cooking
 ### Technology Req
 - sqllite for databases since android comes with it by default
-- javascript for local backend
-- java for remote backend maybe but probably just use javascript
+- postgresql for server database since sqllite sucks as a client/server database
+- javascript for possibly an authentication server or something else
 - tailwind for css
-- html for frontend
+- native react with expo framework for app
 - React native + expo + tailwind css + sqllite(client side) + postgresql(server side)
