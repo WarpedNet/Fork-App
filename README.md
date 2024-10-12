@@ -5,8 +5,8 @@ Project : Fork - Github but for recipes
 ## Core Functionality
 - User Comments section (Make it limited to like 250 words or smthn)
 - Forking Function (Like Github)
-- Central database for the backbone of the app (maybe built in postgresql)
-- Local database for storing recipes locally on the device (maybe built in sqlite)
+- Central database for the backbone of the app (built in postgresql)
+- Local database for storing recipes locally on the device (built in sqlite)
 - User Rating system
 - User Login system
 - User Registration System
