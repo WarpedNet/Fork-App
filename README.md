@@ -1,5 +1,5 @@
 
-Project : Fork - Github but for recipes
+# Project : Fork - Github but for recipes
 
 "Borrow" Ideas from an app called "Paprika"
 ## Core Functionality
