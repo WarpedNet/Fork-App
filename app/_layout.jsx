@@ -1,4 +1,9 @@
 import { Stack } from "expo-router"
+
+// 
+// Stack layout for the default pages.
+// 
+
 const RootLayout = () => {
     return (
         <Stack>
