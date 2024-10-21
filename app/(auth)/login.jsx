@@ -12,7 +12,7 @@ const login = () => {
         <Text className="text-4xl text-white font-bold my-6">Log In</Text>
         <CustomInputField name="Username" placeholder="Username" changeText={(e) => setformField({...formField, username: e})} value={formField.username}/>
         <CustomInputField name="Password" placeholder="Password" changeText={(e) => setformField({...formField, password: e})} value={formField.password}/>
-        <TouchableOpacity className="bg-secondary rounded-full px-3 py-2" onPress={() =>{router.push("../(main)/home")} /*{alert("Username: "+formField.username+"\nPassword: "+formField.password)}*/ }>
+        <TouchableOpacity className="bg-secondary rounded-full px-3 py-2" onPress={() =>{router.push("../(tabs)/home")} /*{alert("Username: "+formField.username+"\nPassword: "+formField.password)}*/ }>
           <Text className="text-white text-2xl">Log In</Text>
         </TouchableOpacity>
       </View>
