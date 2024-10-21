@@ -1,5 +1,9 @@
 import { Stack } from 'expo-router'
 
+// 
+// Stack layout for authorisation pages.
+// 
+
 const AuthLayout = () => {
   return (
     <Stack>
