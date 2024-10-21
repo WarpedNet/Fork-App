@@ -1,5 +1,6 @@
 import { TouchableOpacity, View, Text } from 'react-native'
 import { React, useState } from 'react'
+import { router } from 'expo-router'
 import { SafeAreaView } from "react-native-safe-area-context"
 import CustomInputField from '../../components/CustomInputField'
 import { Link, router } from "expo-router"
@@ -20,7 +21,7 @@ const login = () => {
         {/* input fields for username and password */}
         <CustomInputField name="Username" placeholder="Username" changeText={(e) => setformField({...formField, username: e})} value={formField.username}/>
         <CustomInputField name="Password" placeholder="Password" changeText={(e) => setformField({...formField, password: e})} value={formField.password}/>
-
+          
         {/* setting the items to centre */}
         <View className="flex-col space-y-4 justify-center items-center">
 
@@ -31,7 +32,6 @@ const login = () => {
           <TouchableOpacity className="bg-secondary rounded-full px-3 py-2" onPress={() => {alert("Username: "+formField.username+"\nPassword: "+formField.password)} }>
             <Text className="text-white text-2xl">Log In</Text>
           </TouchableOpacity>
-        </View>
       </View>
     </SafeAreaView>
   )
