@@ -1,6 +1,5 @@
 import { TouchableOpacity, View, Text } from 'react-native'
 import { React, useState } from 'react'
-import { router } from 'expo-router'
 import { SafeAreaView } from "react-native-safe-area-context"
 import CustomInputField from '../../components/CustomInputField'
 import { Link, router } from "expo-router"
@@ -32,6 +31,7 @@ const login = () => {
           <TouchableOpacity className="bg-secondary rounded-full px-3 py-2" onPress={() => {alert("Username: "+formField.username+"\nPassword: "+formField.password)} }>
             <Text className="text-white text-2xl">Log In</Text>
           </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   )
