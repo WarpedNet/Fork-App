@@ -1,7 +1,6 @@
 
 # Project : Fork - Github but for recipes
 
-"Borrow" Ideas from an app called "Paprika"
 ## Core Functionality
 - User Comments section (Make it limited to like 250 words or smthn)
 - Forking Function (Like Github)
