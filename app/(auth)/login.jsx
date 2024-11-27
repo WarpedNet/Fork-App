@@ -28,7 +28,7 @@ const login = () => {
           <Text className="text-base text-white px-3 py-2">Don't have an account? <Link href="./register" className="text-secondary-100">Register Here</Link></Text>
 
           {/* temporary alert response to show user input based on log in button press */}
-          <TouchableOpacity className="bg-secondary rounded-full px-3 py-2" onPress={() => {alert("Username: "+formField.username+"\nPassword: "+formField.password)} }>
+          <TouchableOpacity className="bg-secondary rounded-full px-3 py-2" onPress={() => {alert("im gonna kermit a crime\nUsername: "+formField.username+"\nPassword: "+formField.password)} }>
             <Text className="text-white text-2xl">Log In</Text>
           </TouchableOpacity>
         </View>
