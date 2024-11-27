@@ -36,6 +36,7 @@ const login = () => {
             <Text className="text-white text-2xl">Log In</Text>
           </TouchableOpacity>
         </View>
+      </View>
     </SafeAreaView>
   )
 }
