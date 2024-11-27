@@ -1,7 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context"
 import { View, Text, TouchableOpacity, Appearance, useColorScheme } from "react-native"
 import { router } from "expo-router"
-import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar"
 import { ScrollView } from "react-native"
 
 // 
