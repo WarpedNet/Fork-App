@@ -3,7 +3,9 @@ const tabLayout = () => {
     return (
         <Tabs>
             <Tabs.Screen name="home" options={{title: 'Home'}} />
-        </Tabs> 
+            <Tabs.Screen name="forks" options={{title: 'Forks'}} />
+        </Tabs>
+        
     );
 
 }
