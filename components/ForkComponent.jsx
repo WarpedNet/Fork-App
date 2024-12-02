@@ -14,9 +14,6 @@ const ForkComponent = ({title,description}) => {
         width: 300,
         height: 300,
       }}
-      source={
-        require(/* link to image idk how we gonna do that*/)
-      }
 
       />
       </Pressable>
