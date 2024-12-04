@@ -1,5 +1,5 @@
 import { Stack } from "expo-router"
-
+import "../globals.css"
 // 
 // Stack layout for the default pages.
 // 
