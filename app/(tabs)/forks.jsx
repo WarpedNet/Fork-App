@@ -9,8 +9,8 @@ export default function Forks() {
     <SafeAreaProvider>
     <SafeAreaView>
       <ScrollView>
-      <ForkComponent title={<Text>Pie</Text>} />
-      <ForkComponent  title={<Text>Pie, but different</Text>}/>
+      <ForkComponent title={<Text>Pie</Text>} description={<Text>This is a pie recipe, very nice</Text>}/>
+      <ForkComponent  title={<Text>Pie, but different</Text>} description={<Text>This is a pie, but different. I stuffed 3 appls inside it. It's really good, I swear.</Text>}/>
     </ScrollView>
     </SafeAreaView>
     </SafeAreaProvider>
