@@ -1,8 +1,9 @@
 import { SafeAreaView } from "react-native-safe-area-context"
 import { View, Text, TouchableOpacity, Appearance, useColorScheme } from "react-native"
 import { router } from "expo-router"
-import { ScrollView } from "react-native"
+import { ScrollView, Image } from "react-native"
 import { Header } from "@rneui/base"
+import { Button } from "@rneui/themed"
 
 // 
 // Main page the user sees when opening the app.
@@ -24,17 +25,15 @@ export default index = () => {
 
     <SafeAreaView className="bg-primary h-full">
       {/* Top Bar */}
-      <Header backgroundColor="green" centerComponent={{text: "Home"}} />
+      <Header backgroundColor="green"/>
       <View className="items-center justify-center my-2">
       </View>
       <ScrollView className="mx-6 my-2 mb-4">
+        <Image source={require('../assets/forkLogo.png')} />
       </ScrollView>
       {/* Bottom Bar */}
       <View className="flex-row gap-8 justify-center items-center mb-4">
-        <TouchableOpacity className="bg-tertiary-100 w-[15vw] h-[15vw]" onPress={() => { router.push("./login")}}><Text className="text-center text-xl">Log In</Text></TouchableOpacity>
-        <TouchableOpacity className="bg-secondary-100 w-[15vw] h-[15vw]"><Text className="text-center text-base">Button6</Text></TouchableOpacity>
-        <TouchableOpacity className="bg-tertiary-100 w-[15vw] h-[15vw]"><Text className="text-center text-base">Button7</Text></TouchableOpacity>
-        <TouchableOpacity className="bg-secondary-100 w-[15vw] h-[15vw]"><Text className="text-center text-base">Button8</Text></TouchableOpacity>
+        <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => { router.push("./login")}}><Text className="text-center text-xl">Log In</Text></Button>
       </View>
 
     </SafeAreaView>
