@@ -1,22 +1,15 @@
 import { Text, View, Image, Pressable } from 'react-native'
 import { Card } from '@rneui/base'
 
-//elements of the card itself: Name, Image, Tags
+//elements of the card itself: Name, Image, Description
 //maybe we can do an image idk
-const ForkComponent = ({title,description}) => {
+const ForkComponent = ({}) => {
   return (
-    <Card
-    title='title goe here'>
-      <Pressable onPress={console.log("Send to the page for the recipe")
-      }>
-      <Image
-      style={{
-        width: 300,
-        height: 300,
-      }}
+    <Card>
+      <Text className="text-center"> Title of Fork </Text>
+      <Pressable onPress={console.log("Send to the page for the recipe")}>
 
-      />
-      </Pressable>
+        </Pressable>
     </Card>
   )
 }
