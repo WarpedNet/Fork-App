@@ -16,10 +16,7 @@ size="small"
 title="PH"
 onPress={/* route to account.jsx*/ console.log("Should Route to acc.jsx (will do soon)")}
 />
-{/* adding the forkcomponent as an example */}
-
-<ForkComponent />
-
+{/* add a link to the fork page with the fork component */}
 
     </SafeAreaView>
   )
