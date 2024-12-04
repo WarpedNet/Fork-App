@@ -9,11 +9,7 @@ export default function Forks() {
     <SafeAreaProvider>
     <SafeAreaView>
       <ScrollView>
-        <ForkComponent />
-        <ForkComponent />
-        <ForkComponent />
-        <ForkComponent />
-        <ForkComponent />
+      <ForkComponent />
     </ScrollView>
     </SafeAreaView>
     </SafeAreaProvider>
