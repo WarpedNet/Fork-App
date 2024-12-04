@@ -3,9 +3,9 @@ module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   theme: {
     colors: {
-      primary: "#242326ff",
+      primary: "#FFFFFF",
       secondary: {
-        DEFAULT: "#333147ff",
+        DEFAULT: "#00FF00",
         100: "#69609Eff",
         200: "#676669ff",
         300: "#140382ff",
