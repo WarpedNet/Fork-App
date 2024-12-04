@@ -7,7 +7,7 @@ import { router } from 'expo-router';
 //maybe we can do an image idk
 const sendToRecipe = () => {
   console.log("Sending to recipe page...");
-  router.push("../app/forks");
+  router.push('../app/forks');
 
   
 }
