@@ -1,14 +1,24 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { Text, View, Image, Pressable } from 'react-native'
+import { Card } from '@rneui/base'
 
-export class ForkComponent extends Component {
-  render() {
-    return (
-      <View>
-        <Text style={{height: 40, borderWidth: 2, borderColor: 'black'}}>Recipe Name Goes Here</Text>
-      </View>
-    )
-  }
+//elements of the card itself: Name, Image, Tags
+//maybe we can do an image idk
+const ForkComponent = ({title,description}) => {
+  return (
+    <Card
+    title='title goe here'>
+      <Pressable onPress={console.log("Send to the page for the recipe")
+      }>
+      <Image
+      style={{
+        width: 300,
+        height: 300,
+      }}
+
+      />
+      </Pressable>
+    </Card>
+  )
 }
 
 export default ForkComponent
