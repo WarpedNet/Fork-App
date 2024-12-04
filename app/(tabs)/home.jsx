@@ -8,9 +8,6 @@ export default function Home() {
   return (
     <SafeAreaView>
       {/* big title for the thing */}
-      <Header
-      centerComponent={{text:'Home'}}
-      />
 <Avatar
 size="small"
 title="PH"
