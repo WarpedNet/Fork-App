@@ -15,13 +15,14 @@ const sendToRecipe = () => {
 
 
 
-const ForkComponent = ({title}) => {
+const ForkComponent = ({title, description}) => {
   return (
     <Card>
       <Text className="text-center">{title}</Text>
       <TouchableOpacity onPress={sendToRecipe}>
         <Image  className= "size-24" source={require('../app/(tabs)/imeg/images.jpg')}/>
         </TouchableOpacity>
+        <Text className="text-wrap">{description}</Text>
     </Card>
   )
 }
