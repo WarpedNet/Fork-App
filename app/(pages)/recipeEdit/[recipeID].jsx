@@ -3,7 +3,8 @@ import { React, useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as SQLite from 'expo-sqlite'
 import { Divider } from '@rneui/base'
-import { Button } from "@rneui/themed"
+import { Button, ButtonGroup, Icon, Input } from "@rneui/themed"
+import { MaterialCommunityIcons } from '@expo/vector-icons'  
 import { router, useLocalSearchParams } from 'expo-router'
 import * as ImagePicker from 'expo-image-picker'
 import { Buffer } from "buffer"
@@ -73,19 +74,24 @@ const recipeEditPage = () => {
   
   return (
     <SafeAreaView>
-      <View className="h-full w-full">
-          <TextInput value={recipe.name} className="border-spacing-3 max-w-sm max-h-10" onChangeText={(e) => setRecipe({...recipe, name: e})} placeholder="RecipeName"/>
-          <Image source={{uri: "data:image/png;base64,"+recipe.icon}} width={100} height={100}></Image>
+      <View className="h-[50vh] w-full">
+          <Input value={recipe.name} errorMessage='You need a recipe name!' rightIcon={<MaterialCommunityIcons name='silverware-fork' size={20} />} onChangeText={(e) => setRecipe({...recipe, name: e})} placeholder="Your Recipe Name"/>
+          <Input value={recipe.desc} onChangeText={(e) => setRecipe({...recipe, desc: e})} placeholder="Description. 30 words max!"/>
+          <Input value={recipe.method} onChangeText={(e) => setRecipe({...recipe, method: e})} placeholder="Method. Use commas to separate your steps, and be concise!"/>
           <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => getIconImage()}><Text className="text-center text-xl">Icon Image</Text></Button>
-          <TextInput value={recipe.desc} onChangeText={(e) => setRecipe({...recipe, desc: e})} placeholder="RecipeDesc"/>
-          <TextInput value={recipe.method} onChangeText={(e) => setRecipe({...recipe, method: e})} placeholder="RecipeMethod"/>
-          <Image source={{uri: "data:image/png;base64,"+recipe.bannerimg}} width={600} height={200}></Image>
+          <View className="h-[10vh] w-full justify-center items-center"> 
+            <Image source={{uri: "data:image/png;base64,"+recipe.icon}} width={100} height={100}></Image>
+            </View>
           <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => getBannerImage()}><Text className="text-center text-xl">Banner Image</Text></Button>
+          <View className="h-[10vh] w-full justify-center items-center">
+          <Image source={{uri: "data:image/png;base64,"+recipe.bannerimg}} width={300} height={100}></Image>
+          </View>
           {/* Bottom Bar */}
           <View className="h-[10vh]">
-            <Divider width={3} color="black" className="align-bottom"></Divider>
+            <Divider width={220} color='white' className="align-bottom"></Divider>
             <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
-              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => saveRecipeLocal()}><Text className="text-center text-xl">Save Local</Text></Button>
+              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" iconRight={<MaterialCommunityIcons name='silverware-fork' size={20} />} onPress={() => saveRecipeLocal()}><Text className="text-center text-xl">Save Local</Text></Button>
+              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => router.push("../viewLocal")}><Text className="text-center text-xl">Cancel</Text></Button>
             </View>
           </View>
       </View>

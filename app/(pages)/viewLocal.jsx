@@ -3,7 +3,7 @@ import { React, useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as SQLite from 'expo-sqlite'
 import { Divider } from '@rneui/base'
-import { Button } from "@rneui/themed"
+import { Button, Header } from "@rneui/themed"
 import { router } from 'expo-router'
 import RecipeIconDisplay from '../../components/RecipeIconDisplay'
 
@@ -41,14 +41,15 @@ const viewLocal = () => {
   return (
     <SafeAreaView>
       <View className="h-full w-full">
+        <Header backgroundColor="#00ff00" centerComponent={{text: "Saved Forks"}} />
         <FlatList numColumns={3} data={recipes} renderItem={(recipe) => <RecipeIconDisplay recipeName={recipe.item.recipe_name} iconImg={recipe.item.icon}/>}/>
 
           {/* Bottom Bar */}
           <View className="h-[10vh]">
             <Divider width={3} color="black" className="align-bottom"></Divider>
             <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
-              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => { router.push(`/recipeEdit/${null}`)}}><Text className="text-center text-xl">Create Recipe</Text></Button>
-              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => {deleteDB()}}><Text className="text-center text-xl">Delete All</Text></Button>
+              <Button className=" dark:bg-secondary w-[15vw] h-[15vw]" onPress={() => { router.push(`/recipeEdit/${null}`)}}><Text className="text-center text-xl">Create Recipe</Text></Button>
+              <Button className=" dark:bg-secondary w-[15vw] h-[15vw]" onPress={() => {deleteDB()}}><Text className="text-center text-xl">Delete All</Text></Button>
             </View>
           </View>
       </View>
