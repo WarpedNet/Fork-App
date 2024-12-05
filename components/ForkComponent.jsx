@@ -9,9 +9,6 @@ const sendToRecipe = () => {
   console.log("Sending to recipe page...");
 }
 
-
-
-
 const ForkComponent = ({title, description, source}) => {
   return (
     <Card>
