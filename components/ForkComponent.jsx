@@ -8,8 +8,6 @@ import { router } from 'expo-router';
 const sendToRecipe = () => {
   console.log("Sending to recipe page...");
   router.push('../app/forks');
-
-  
 }
 
 
@@ -20,7 +18,7 @@ const ForkComponent = ({title, description}) => {
     <Card>
       <Text className="text-center">{title}</Text>
       <TouchableOpacity onPress={sendToRecipe}>
-        <Image  className= "size-24" source={require('../app/(tabs)/imeg/images.jpg')}/>
+        {/* <Image className= "size-24" source={require('../app/(pages)/imeg/images.jpg')}/> */}
         </TouchableOpacity>
         <Text className="text-wrap">{description}</Text>
     </Card>
