@@ -59,13 +59,16 @@ const recipeEditPage = () => {
   }, [])
 
   const saveRecipeLocal = async() => {
-    const db = await SQLite.openDatabaseAsync("fork.db");
-    await db.execAsync("CREATE TABLE IF NOT EXISTS Forks (ForkID INTEGER PRIMARY KEY NOT NULL, recipe_name TEXT, icon TEXT, recipe_desc TEXT, recipe_method TEXT, banner_img TEXT)")
-    console.log("data:image/png;base64,"+recipe.icon)
-    // await db.runAsync("INSERT INTO forks (recipe_name, icon, recipe_desc, recipe_method, banner_img) VALUES (?,?,?,?,?)", recipe.name, "data:image/png;base64,"+recipe.icon, recipe.desc, recipe.method, recipe.bannerimg)
-    const statement = await db.prepareAsync('INSERT INTO forks (recipe_name, icon, recipe_desc, recipe_method, banner_img) VALUES ($name, $icon, $desc, $method, $bannerimg)')
-    await statement.executeAsync({$name: recipe.name, $icon: recipe.icon, $desc: recipe.desc, $method: recipe.method, $bannerimg: recipe.banner_img})
-    // await db.runAsync("INSERT INTO forks (recipe_name, recipe_desc, recipe_method) VALUES (?,?,?)", recipe.name, recipe.desc, recipe.method)
+    if (recipe.name.length > 1) {
+      const db = await SQLite.openDatabaseAsync("fork.db");
+      await db.execAsync("CREATE TABLE IF NOT EXISTS Forks (ForkID INTEGER PRIMARY KEY NOT NULL, recipe_name TEXT, icon TEXT, recipe_desc TEXT, recipe_method TEXT, banner_img TEXT)")
+      // console.log("data:image/png;base64,"+recipe.icon)
+      // await db.runAsync("INSERT INTO forks (recipe_name, icon, recipe_desc, recipe_method, banner_img) VALUES (?,?,?,?,?)", recipe.name, "data:image/png;base64,"+recipe.icon, recipe.desc, recipe.method, recipe.bannerimg)
+      const statement = await db.prepareAsync('INSERT INTO forks (recipe_name, icon, recipe_desc, recipe_method, banner_img) VALUES ($name, $icon, $desc, $method, $bannerimg)')
+      await statement.executeAsync({$name: recipe.name, $icon: recipe.icon, $desc: recipe.desc, $method: recipe.method, $bannerimg: recipe.bannerimg})
+      // await db.runAsync("INSERT INTO forks (recipe_name, recipe_desc, recipe_method) VALUES (?,?,?)", recipe.name, recipe.desc, recipe.method)
+      router.push("/viewLocal")
+    }
   }
   
   return (

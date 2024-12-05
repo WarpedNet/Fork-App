@@ -9,15 +9,12 @@ const sendToRecipe = () => {
   console.log("Sending to recipe page...");
 }
 
-
-
-
 const ForkComponent = ({title, description, source}) => {
   return (
     <Card>
       <Text className="text-center">{title}</Text>
       <TouchableOpacity onPress={sendToRecipe}>
-        <Image className= "size-24" source={require(source)}/> 
+        {/* <Image className= "size-24" source={require(source)}/>  */}
         </TouchableOpacity>
         <Text className="text-wrap">{description}</Text>
     </Card>
