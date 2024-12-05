@@ -71,7 +71,7 @@ const recipeEditPage = () => {
   return (
     <SafeAreaView>
       <View className="h-full w-full">
-          <TextInput value={recipe.name} onChangeText={(e) => setRecipe({...recipe, name: e})} placeholder="RecipeName"/>
+          <TextInput value={recipe.name} className="border-spacing-3 max-w-sm max-h-10" onChangeText={(e) => setRecipe({...recipe, name: e})} placeholder="RecipeName"/>
           <Image source={{uri: "data:image/png;base64,"+recipe.icon}} width={100} height={100}></Image>
           <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => getIconImage()}><Text className="text-center text-xl">Icon Image</Text></Button>
           <TextInput value={recipe.desc} onChangeText={(e) => setRecipe({...recipe, desc: e})} placeholder="RecipeDesc"/>
