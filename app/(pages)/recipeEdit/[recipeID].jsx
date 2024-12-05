@@ -6,15 +6,19 @@ import { Divider } from '@rneui/base'
 import { Button } from "@rneui/themed"
 import { router, useLocalSearchParams } from 'expo-router'
 import * as ImagePicker from 'expo-image-picker'
-import FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system';
+import * as ImageManipulator from "expo-image-manipulator"
+
 const recipeEditPage = () => {
 
   const { recipeID } = useLocalSearchParams();
+
   const [recipe, setRecipe] = useState({
     name: "",
-    icon: null,
+    icon: "",
     desc: "",
-    method: ""
+    method: "",
+    bannerimg: ""
   });
 
   const getRecipe = async (id) => {
@@ -31,33 +35,47 @@ const recipeEditPage = () => {
       allowsMultipleSelection: false,
       aspect: [1,1]
     });
-    console.log(imageURI.assets[0].uri);
-    const base64img = await FileSystem.readAsStringAsync(imageURI.assets[0].uri, {encoding: "base64"})
-    console.log(base64img)
-    setRecipe({...recipe, icon: base64img})
+
+  const resizedImage = await ImageManipulator.manipulateAsync(imageURI.assets[0].uri, [{resize: {width: 100, height: 100}}], {format: ImageManipulator.SaveFormat.PNG, base64:true})
+    // setRecipe({...recipe, icon: {base64:"data:image/png;base64"+resizedImage}})
+    setRecipe({...recipe, icon: resizedImage})
   }
 
+  const getBannerImage = async () => {
+    let imageURI = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      quality: 1,
+      allowsMultipleSelection: false,
+      aspect: [1,1]
+    });
+
+  const resizedImage = await ImageManipulator.manipulateAsync(imageURI.assets[0].uri, [{resize: {width: 600, height: 200}}], {format: ImageManipulator.SaveFormat.PNG, base64:true})
+    // setRecipe({...recipe, icon: {base64:"data:image/png;base64"+resizedImage}})
+    setRecipe({...recipe, bannerimg: resizedImage})
+  }
 
   useEffect(() => {
     getRecipe(recipeID);
     
-  }, [recipeID])
-
+  }, [])
 
   const saveRecipeLocal = async() => {
     const db = await SQLite.openDatabaseAsync("fork.db");
-    await db.execAsync("CREATE TABLE IF NOT EXISTS Forks (ForkID INTEGER PRIMARY KEY NOT NULL, recipe_name TEXT, icon TEXT, recipe_desc TEXT, recipe_method TEXT)")
-    await db.runAsync("INSERT INTO forks (recipe_name, icon, recipe_desc, recipe_method) VALUES (?,?,?)", recipe.name, recipe.icon, recipe.desc, recipe.method)
+    await db.execAsync("CREATE TABLE IF NOT EXISTS Forks (ForkID INTEGER PRIMARY KEY NOT NULL, recipe_name TEXT, icon TEXT, recipe_desc TEXT, recipe_method TEXT, banner_img TEXT)")
+    await db.runAsync("INSERT INTO forks (recipe_name, icon, recipe_desc, recipe_method, banner_img) VALUES (?,?,?,?)", recipe.name, recipe.icon, recipe.desc, recipe.method, recipe.bannerimg)
   }
   
   return (
     <SafeAreaView>
       <View className="h-full w-full">
           <TextInput value={recipe.name} onChangeText={(e) => setRecipe({...recipe, name: e})} title="RecipeName"/>
-          <Image source={"data:image/png;base64"+recipe.icon}></Image>
+          <Image source={recipe.icon} width={100} height={100}></Image>
           <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => getIconImage()}><Text className="text-center text-xl">Icon Image</Text></Button>
           <TextInput value={recipe.desc} onChangeText={(e) => setRecipe({...recipe, desc: e})} title="RecipeDesc"/>
           <TextInput value={recipe.method} onChangeText={(e) => setRecipe({...recipe, method: e})} title="RecipeMethod"/>
+          <Image source={recipe.bannerimg} width={600} height={200}></Image>
+          <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => getBannerImage()}><Text className="text-center text-xl">Banner Image</Text></Button>
           {/* Bottom Bar */}
           <View className="h-[10vh]">
             <Divider width={3} color="black" className="align-bottom"></Divider>
