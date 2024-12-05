@@ -30,7 +30,7 @@ const login = () => {
           {/* temporary alert response to show user input based on log in button press */}
           <TouchableOpacity className="bg-secondary rounded-full px-3 py-2" onPress={() => 
             {alert("Username: "+formField.username+"\nPassword: "+formField.password)
-              router.push("../(tabs)/home")
+              router.push("../(pages)/home")
             }
             }>
             <Text className="text-white text-2xl">Log In</Text>
