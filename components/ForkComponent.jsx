@@ -1,22 +1,22 @@
-import { Text, View, Image, Pressable } from 'react-native'
+import { Text, View, Image, Pressable, TouchableOpacity } from 'react-native'
 import { Card } from '@rneui/base'
+import { router } from 'expo-router';
 
-//elements of the card itself: Name, Image, Tags
+
+//elements of the card itself: Name, Image, Description
 //maybe we can do an image idk
-const ForkComponent = ({title,description}) => {
-  return (
-    <Card
-    title='title goe here'>
-      <Pressable onPress={console.log("Send to the page for the recipe")
-      }>
-      <Image
-      style={{
-        width: 300,
-        height: 300,
-      }}
+const sendToRecipe = () => {
+  console.log("Sending to recipe page...");
+}
 
-      />
-      </Pressable>
+const ForkComponent = ({title, description, source}) => {
+  return (
+    <Card>
+      <Text className="text-center">{title}</Text>
+      <TouchableOpacity onPress={sendToRecipe}>
+        {/* <Image className= "size-24" source={require(source)}/>  */}
+        </TouchableOpacity>
+        <Text className="text-wrap">{description}</Text>
     </Card>
   )
 }

@@ -1,7 +1,10 @@
 import { SafeAreaView } from "react-native-safe-area-context"
 import { View, Text, TouchableOpacity, Appearance, useColorScheme } from "react-native"
 import { router } from "expo-router"
-import { ScrollView } from "react-native"
+import { ScrollView, Image } from "react-native"
+import { Divider, Header } from "@rneui/base"
+import { Button } from "@rneui/themed"
+import { SQLiteProvider } from "expo-sqlite"
 
 // 
 // Main page the user sees when opening the app.
@@ -20,56 +23,28 @@ export default index = () => {
     //     </TouchableOpacity>
     //   </View>
     // </SafeAreaView>
+    <SQLiteProvider databaseName="fork.db">
+      <SafeAreaView className="bg-primary flex-1">
+        {/* Top Bar */}
+        <Header backgroundColor="green"/>
+        <View className="flex-col items-center justify-center h-full w-full">
+          <View className="h-[80vh] w-full items-center justify-center">
+            <Image source={require("../assets/forkLogo.png")} className="w-full" resizeMethod="scale" resizeMode="contain"/>
+          </View>
+            
+          {/* Bottom Bar */}
+          <View className="h-[10vh]">
+            <Divider width={3} color="black" className="align-bottom"></Divider>
+            <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
+              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => { router.push("./login")}}><Text className="text-center text-xl">Log In</Text></Button>
+              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => router.push("./register")}><Text className="text-center text-xl">Register</Text></Button>
+              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => router.push("./viewLocal")}><Text className="text-center text-xl">Saved Recipes</Text></Button>
+            </View>
+          </View>
+        </View>
 
-    <SafeAreaView className="bg-primary h-full">
-      {/* Top Bar */}
-      <View className="flex-row gap-x-5 itmes-center justify-center h-20 mb-20">
-          {/* Left buttons */}
-          <View className="w-[20vw] h-full">
-              <TouchableOpacity className="bg-tertiary-100 w-full h-full items-center justify-center"><Text className="text-center text-xl">Button1</Text></TouchableOpacity>
-              <TouchableOpacity className="bg-secondary-100 w-full h-full items-center justify-center"><Text className="text-center text-xl">Button2</Text></TouchableOpacity>
-          </View>
-          {/* Center Text */}
-          <View className="w-[45vw] h-full items-center justify-center">
-            <Text className="text-3xl text-white text-center">
-              Recipe Title
-            </Text>
-          </View>
-          {/* Right buttons */}
-          <View className="w-[20vw] h-full">
-              <TouchableOpacity className="bg-tertiary-100 w-full h-full items-center justify-center"><Text className="text-center text-xl">Button3</Text></TouchableOpacity>
-              <TouchableOpacity className="bg-secondary-100 w-full h-full items-center justify-center"><Text className="text-center text-xl">Button4</Text></TouchableOpacity>
-          </View>
-      </View>
-      {/* Main body */}
-      <View className="items-center justify-center my-2">
-        <Text className="text-2xl text-white">Method</Text>
-      </View>
-      <ScrollView className="mx-6 my-2 mb-4">
-        <Text className="text-lg text-white h-fit">
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        </Text>
-      </ScrollView>
-      {/* Bottom Bar */}
-      <View className="flex-row gap-8 justify-center items-center mb-4">
-        <TouchableOpacity className="bg-tertiary-100 w-[15vw] h-[15vw]" onPress={() => { router.push("./login")}}><Text className="text-center text-xl">Log In</Text></TouchableOpacity>
-        <TouchableOpacity className="bg-secondary-100 w-[15vw] h-[15vw]"><Text className="text-center text-base">Button6</Text></TouchableOpacity>
-        <TouchableOpacity className="bg-tertiary-100 w-[15vw] h-[15vw]"><Text className="text-center text-base">Button7</Text></TouchableOpacity>
-        <TouchableOpacity className="bg-secondary-100 w-[15vw] h-[15vw]"><Text className="text-center text-base">Button8</Text></TouchableOpacity>
-      </View>
-
-    </SafeAreaView>
+      </SafeAreaView>
+    </SQLiteProvider>
   )
 
 }
