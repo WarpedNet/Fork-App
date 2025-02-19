@@ -8,14 +8,16 @@ import { router } from "expo-router";;
 // generating dummy data for a list 
 const getItem = (_data, index) => ({
   id: Math.random().toString(12).substring(0),
-  title: 'Recipe ${index + 1}',
+  title: 'Your Recipe Name',
   });
 
 const getItemCount = _data => 40;
 
 const Item = ({title}) => (
-  <View style={{height:100, marginVertical: 1, backgroundColor:'white', justifyContent: 'center', borderColor: 'black', borderTopWidth: 5}}>
-    <Text>{title}</Text>
+  <View className="rounded-xl p-10" style={{height:100, marginVertical: 10, backgroundColor:'white', justifyContent: 'center', borderColor: 'grey', borderTopWidth: 2, borderBottomWidth: 2, borderLeftWidth:2, borderRightWidth:2}}>
+    <Text className="text-xl font-bold">{title}</Text>
+    <Text className="text-sm font-thin">Your Description here</Text>
+    <Image source={{uri:"../../assets/pie.jpg"}} />
   </View>
 )
 
