@@ -21,13 +21,13 @@ const recipeEditPage = () => {
     method: "",
     bannerimg: ""
   });
-
+  // Getting the select recipe data from the database
   const getRecipe = async (id) => {
     const db = await SQLite.openDatabaseAsync("fork.db");
     const result = await db.getAllAsync("SELECT * FROM Forks WHERE ForkID = ?", id)
     setRecipe({name: result.recipe_name, desc: result.recipe_desc, method: result.recipe_method});
   }
-
+  // Getting the icon image from the user, resizing it then formatting it into base64
   const getIconImage = async () => {
     let imageURI = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
@@ -36,12 +36,14 @@ const recipeEditPage = () => {
       allowsMultipleSelection: false,
       aspect: [1,1]
     });
-
+    // Resizing the icon image to something small
   const resizedImage = await ImageManipulator.manipulateAsync(imageURI.assets[0].uri, [{resize: {width: 200, height: 200}}], {format: ImageManipulator.SaveFormat.PNG, base64:true})
     setRecipe({...recipe, icon: resizedImage.base64})
   }
 
+  // Getting the banner image from the user, resizing it then formatting it into base64 (different aspect ratio to the icon)
   const getBannerImage = async () => {
+    // Expo image picker allowing the user to pick an image from their phone library
     let imageURI = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsEditing: true,
@@ -49,16 +51,18 @@ const recipeEditPage = () => {
       allowsMultipleSelection: false,
       aspect: [3,1]
     });
-
+  
+    // Resizing the image to a set dimension and saving it as base 64, then storing that inside the useState for the page
   const resizedImage = await ImageManipulator.manipulateAsync(imageURI.assets[0].uri, [{resize: {width: 600, height: 200}}], {format: ImageManipulator.SaveFormat.PNG, base64:true})
     setRecipe({...recipe, bannerimg: resizedImage.base64})
   }
 
+  // Automatically get the recipe on page load
   useEffect(() => {
     getRecipe(recipeID);
-    
   }, [])
 
+  // Takes the information from the useState and saves it into the local database
   const saveRecipeLocal = async() => {
     if (recipe.name.length > 1) {
       const db = await SQLite.openDatabaseAsync("fork.db");
