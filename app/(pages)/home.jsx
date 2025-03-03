@@ -1,8 +1,8 @@
 import React from "react";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context"; 
-import {Text, View, Button, TouchableOpacity, VirtualizedList} from "react-native";
+import {Text, Image, View, Button, TouchableOpacity, VirtualizedList} from "react-native";
 import { Avatar, Header} from "@rneui/base";
-import { Image, SearchBar } from '@rneui/themed';
+import { SearchBar } from '@rneui/themed';
 import ForkComponent from "../../components/ForkComponent";
 import { router } from "expo-router";;
 // generating dummy data for a list 
@@ -13,11 +13,15 @@ const getItem = (_data, index) => ({
 
 const getItemCount = _data => 40;
 
+// this prop takes dummy data that can be replaced by SQL queries to show title and desc of recipe
+// ontouch will take user to recipe page by the ID of the recipe
 const Item = ({title}) => (
   <View className="rounded-xl p-10" style={{height:100, marginVertical: 10, backgroundColor:'white', justifyContent: 'center', borderColor: 'grey', borderTopWidth: 2, borderBottomWidth: 2, borderLeftWidth:2, borderRightWidth:2}}>
+    <TouchableOpacity>
     <Text className="text-xl font-bold">{title}</Text>
-    <Text className="text-sm font-thin">Your Description here</Text>
-    <Image source={{uri:"../../assets/pie.jpg"}} />
+    <Text className="text-sm font-thin">Your Description here, balls</Text>
+    </TouchableOpacity>
+    <Image className="absolute right-20 w-10 h-10" source={require('../../assets/pie.jpg')}/>
   </View>
 )
 
@@ -28,6 +32,7 @@ export default function Home() {
         {/* big title for the thing */}
         <Header backgroundColor="#00FF00" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}}leftComponent={{icon: 'home', style:{fontSize: 20}}} centerComponent={{text: 'Home', style:{fontSize: 20, fontWeight: "bold"}}} />
         <SearchBar platform={'android'} lightTheme={"true"} placeholder="Find Forks..." />
+        <Image className="absolute w-10 h-10" source={require('../../assets/pie.jpg')}/>
         {/* for searchBar: search function for onChangeText */}
         <Text className="text-center">Browse the forks, or:</Text>
         <View style={[{width: "40%", position:"absolute", top:220, right:120, backgroundColor: "green"}]}>
