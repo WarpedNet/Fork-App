@@ -28,3 +28,6 @@
 - tailwind for css
 - native react with expo framework for app
 - React native + expo + tailwind css + sqllite(client side) + postgresql(server side)
+
+## Environment (.env file)
+EXPO_PUBLIC_API_ADDRESS = "API Address"
