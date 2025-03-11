@@ -1,57 +1,31 @@
 import React from "react";
-import {useState, useEffect} from "react";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context"; 
 import {Text, Image, View, Button, TouchableOpacity, VirtualizedList} from "react-native";
 import { Avatar, Header} from "@rneui/base";
 import { SearchBar } from '@rneui/themed';
 import ForkComponent from "../../components/ForkComponent";
 import { router } from "expo-router";;
-// generating dummy data for a list
-
-const getItem = (data, index) => ({
-  id: data[index].fork_id,
-  title: data[index].recipe_name,
-  description: data[index].recipe_desc,
-  icon: data[index].recipe_icon,
+// generating dummy data for a list 
+const getItem = (_data, index) => ({
+  id: Math.random().toString(12).substring(0),
+  title: 'Your Recipe Name',
   });
+
+const getItemCount = _data => 40;
 
 // this prop takes dummy data that can be replaced by SQL queries to show title and desc of recipe
 // ontouch will take user to recipe page by the ID of the recipe
-const Item = ({title, description, icon}) => (
+const Item = ({title}) => (
   <View className="rounded-xl p-10" style={{height:100, marginVertical: 10, backgroundColor:'white', justifyContent: 'center', borderColor: 'grey', borderTopWidth: 2, borderBottomWidth: 2, borderLeftWidth:2, borderRightWidth:2}}>
     <TouchableOpacity>
     <Text className="text-xl font-bold">{title}</Text>
-    <Text className="text-sm font-thin">{description}</Text>
+    <Text className="text-sm font-thin">Your Description here, balls</Text>
     </TouchableOpacity>
-    {/* If the icon is null, set default image */}
-    <Image className="absolute right-20 w-10 h-10" source={(icon != null) ? {uri: "data:image/png;base64,"+icon} : require("../../assets/pie.jpg")}/>
+    <Image className="absolute right-20 w-10 h-10" source={require('../../assets/pie.jpg')}/>
   </View>
 )
 
-export default function Home() { 
-  // Stores the recipies fetched from database
-  const [recipies, setrecipies] = useState(null); 
-  // Fetches data from api on page load
-  useEffect(() => {
-    const fetchRecipies = async () => {
-      try {
-        // Uses expo's .env file feature (All entries in the .env file must start with EXPO_PUBLIC for expo to recognise them)
-        const api_address = process.env.EXPO_PUBLIC_API_ADDRESS
-        const response = await fetch(`${api_address}/fork`);
-        const data = await response.json();
-        setrecipies(data);
-      }
-      catch (error) {
-        alert(`${api_address}`);
-      }
-    }
-    fetchRecipies()
-  }, [])
-  
-  // Prevents render until data is fetched (Man I love async)
-  if (recipies == null) {
-    return (<Text>Loading....</Text>)
-  }
+export default function Home() {
   return (
     <SafeAreaProvider>
       <SafeAreaView className="bg-primary h-full w-full">
@@ -69,11 +43,10 @@ export default function Home() {
         </View>
         {/* creating a virtualized list, this is for saving memory when we have multiple recipes, it will only visualize a set amount at a time (in this case, 5) */}
         <VirtualizedList style={{flex:1, marginTop:50}}
-        data={recipies}
         initialNumToRender={5}
-        renderItem={({item}) => <Item title={item.title} description={item.description} icon={item.icon} />}
+        renderItem={({item}) => <Item title={item.title} />}
         keyExtractor={item => item.id}
-        getItemCount={(data) => data.length}
+        getItemCount={getItemCount}
         getItem={getItem}
         />
       </SafeAreaView>
@@ -81,3 +54,5 @@ export default function Home() {
     </SafeAreaProvider>
   )
 }
+
+ 
