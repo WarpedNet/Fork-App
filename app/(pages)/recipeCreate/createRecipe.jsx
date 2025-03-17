@@ -1,20 +1,27 @@
 import { View, Text, Image } from 'react-native'
-import { React, useState, useEffect } from 'react'
+import { React, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as SQLite from 'expo-sqlite'
 import { Divider } from '@rneui/base'
 import { Button, Input } from "@rneui/themed"
 import { MaterialCommunityIcons } from '@expo/vector-icons'  
-import { router, useLocalSearchParams } from 'expo-router'
+import { router } from 'expo-router'
 import * as ImagePicker from 'expo-image-picker'
 import * as ImageManipulator from "expo-image-manipulator"
 
-const recipeEdit = () => {
-
-  const { recipeID } = useLocalSearchParams();
+const createRecipe = () => {
 
   // Stores the recipe info
-  const [recipe, setRecipe] = useState(null);
+  const [recipe, setRecipe] = useState({
+    creator_name: null,
+    name: "",
+    description: "",
+    method: "",
+    banner: "",
+    icon: "",
+    image: "",
+    count: null
+  });
 
   // Image picker (allows user to select an image from their library)
   async function pickImage(aspectX, aspectY, resX, resY) {
@@ -55,50 +62,21 @@ const recipeEdit = () => {
     setRecipe({...recipe, icon: image.base64});
   }
 
-  async function getRecipe() {
-    const db = await SQLite.openDatabaseAsync("fork.db");
-    const statement = await db.prepareAsync("SELECT * FROM forks WHERE id = $id");
-    try {
-        const queryResult = await statement.executeAsync({$id: recipeID});
-        setRecipe(await queryResult.getFirstAsync());
-    }
-    finally {
-        statement.finalizeAsync()
-    }
-  }
-
-  // Updates recipe in the database (recipe must have a name)
+  // Saves the current recipe data locally to the device (recipe must have a name)
   async function saveRecipeLocal() {
-    if (recipe.name) {
+    if (recipe.name.length > 0) {
       const db = await SQLite.openDatabaseAsync("fork.db");
-      const statement = await db.prepareAsync(`UPDATE forks SET
-        creator_name = $creator_name,
-        name = $name,
-        description = $description,
-        method = $method,
-        banner = $banner,
-        icon = $icon,
-        image = $image,
-        count = $count
-        WHERE id = $id
-        `);
+      const statement = await db.prepareAsync('INSERT INTO forks (creator_name, name, description, method, banner, icon, image, count) VALUES ($creator_name, $name, $description, $method, $banner, $icon, $image, $count);');
       try {
-        await statement.executeAsync({$creator_name: recipe.creator_name, $name: recipe.name, $description: recipe.description, $method: recipe.method, $banner: recipe.banner, $icon: recipe.icon, $image: recipe.image, $count: recipe.count, $id: recipeID});
+        await statement.executeAsync({$creator_name: recipe.creator_name, $name: recipe.name, $description: recipe.description, $method: recipe.method, $banner: recipe.banner, $icon: recipe.icon, $image: recipe.image, $count: recipe.count})
       }
       finally {
-        statement.finalizeAsync()
+        await statement.finalizeAsync();
         router.push("../viewLocal");
       }
     }
   }
-  
-  useEffect(() => {
-    getRecipe();
-  }, [])
-  
-  if (!recipe) {
-    return (<View><Text>Loading...</Text></View>);
-  }
+
   return (
     <SafeAreaView>
       <View className="h-[50vh] w-full">
@@ -126,4 +104,4 @@ const recipeEdit = () => {
   )
 }
 
-export default recipeEdit
+export default createRecipe

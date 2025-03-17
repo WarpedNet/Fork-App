@@ -12,22 +12,11 @@ import RecipeIconDisplay from '../../components/RecipeIconDisplay'
 const viewLocal = () => {
   const [recipes, setrecipes] = useState(null)
 
-  // async function getData {
-  //   const db = await SQLite.openDatabaseAsync("fork");
-  
-  //   await db.execAsync("CREATE TABLE IF NOT EXISTS Forks (ForkID INTEGER PRIMARY KEY NOT NULL, recipe_name TEXT, recipe_desc TEXT, recipe_method TEXT)")
-  //   // await db.runAsync(`INSERT INTO forks (recipe_name, recipe_desc, recipe_method) VALUES ('test','test','test')`)
-  
-  //   const result = await db.getAllAsync("SELECT * FROM Forks")
-  //   console.log(result)
-  //   setrecipes(result)
-  // }
-
   useEffect(() => {
     async function getData() {
       const db = await SQLite.openDatabaseAsync("fork.db");
     
-      const result = await db.getAllAsync("SELECT * FROM Forks")
+      const result = await db.getAllAsync("SELECT * FROM forks")
       setrecipes(result)
     }
     getData()
@@ -35,19 +24,19 @@ const viewLocal = () => {
   
   const deleteDB = async() => {
     const db = await SQLite.openDatabaseAsync("fork.db");
-    await db.execAsync("DROP TABLE IF EXISTS Forks")
+    await db.execAsync("DROP TABLE IF EXISTS forks")
   }
 
   return (
     <SafeAreaView>
       <View className="h-full w-full">
         <Header backgroundColor="#00ff00" leftComponent={{icon:'home', style: { color: 'black' }}}centerComponent={{text: "Saved Forks", style: {font: 'bold', fontSize: 20}}} />
-        <FlatList numColumns={3} data={recipes} renderItem={(recipe) => <RecipeIconDisplay recipeName={recipe.item.recipe_name} iconImg={recipe.item.icon}/>}/>
+        <FlatList numColumns={3} data={recipes} renderItem={(recipe) => <RecipeIconDisplay ID={recipe.item.id} recipeName={recipe.item.name} icon={recipe.item.icon}/>}/>
 
           {/* Bottom Bar */}
           <View className="h-[10vh]">
             <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
-              <Button className=" dark:bg-secondary w-[15vw] h-[15vw]" onPress={() => { router.push(`/recipeEdit/${null}`)}}><Text className="text-center text-xl">Create Recipe</Text></Button>
+              <Button className=" dark:bg-secondary w-[15vw] h-[15vw]" onPress={() => { router.push("./recipeCreate")}}><Text className="text-center text-xl">Create Recipe</Text></Button>
               <Button className=" dark:bg-secondary w-[15vw] h-[15vw]" onPress={() => {deleteDB()}}><Text className="text-center text-xl">Delete All</Text></Button>
             </View>
           </View>
