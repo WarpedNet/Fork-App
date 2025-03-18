@@ -30,22 +30,22 @@ const Item = ({title, description, icon}) => (
 
 export default function Home() { 
   // Stores the recipies fetched from database
-  const [recipies, setrecipies] = useState(null); 
+  const [recipes, setrecipes] = useState(null); 
   // Fetches data from api on page load
   useEffect(() => {
-    const fetchRecipies = async () => {
+    const fetchRecipes = async () => {
       try {
         // Uses expo's .env file feature (All entries in the .env file must start with EXPO_PUBLIC for expo to recognise them)
         const api_address = process.env.EXPO_PUBLIC_API_ADDRESS
         const response = await fetch(`${api_address}/fork`);
         const data = await response.json();
-        setrecipies(data);
+        setrecipes(data);
       }
       catch (error) {
         alert(`${api_address}`);
       }
     }
-    fetchRecipies()
+    fetchRecipes()
   }, [])
   
   // Prevents render until data is fetched (Man I love async)
@@ -69,7 +69,7 @@ export default function Home() {
         </View>
         {/* creating a virtualized list, this is for saving memory when we have multiple recipes, it will only visualize a set amount at a time (in this case, 5) */}
         <VirtualizedList style={{flex:1, marginTop:50}}
-        data={recipies}
+        data={recipes}
         initialNumToRender={5}
         renderItem={({item}) => <Item title={item.title} description={item.description} icon={item.icon} />}
         keyExtractor={item => item.id}
