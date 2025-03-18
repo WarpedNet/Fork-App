@@ -1,7 +1,7 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context"; 
-import {Text, Image, View, Button, TouchableOpacity, VirtualizedList} from "react-native";
+import {Text, Image, View, Button, TouchableOpacity, VirtualizedList,ActivityIndicator} from "react-native";
 import { Avatar, Header} from "@rneui/base";
 import { SearchBar } from '@rneui/themed';
 import ForkComponent from "../../components/ForkComponent";
@@ -50,7 +50,7 @@ export default function Home() {
   
   // Prevents render until data is fetched (Man I love async)
   if (recipies == null) {
-    return (<Text>Loading....</Text>)
+    return (<ActivityIndicator />)
   }
   return (
     <SafeAreaProvider>

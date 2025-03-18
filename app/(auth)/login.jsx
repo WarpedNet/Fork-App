@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Text } from 'react-native'
+import { TouchableOpacity, View, Text, Image } from 'react-native'
 import { React, useState } from 'react'
 import { SafeAreaView } from "react-native-safe-area-context"
 import CustomInputField from '../../components/CustomInputField'
@@ -14,6 +14,9 @@ const login = () => {
   return (
     <SafeAreaView className="bg-primary h-full w-full">
       {/* setting the items to centre */}
+          <View className="h-10 w-10 items-center justify-center">
+            <Image source={require("../../assets/forkLogo.png")} className="w-10" resizeMethod="scale" resizeMode="contain"/>
+          </View>
       <View className="h-full justify-center items-center space-y-4">
         <Text className="text-4xl text-white font-bold my-6">Log In</Text>
 
