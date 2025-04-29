@@ -21,7 +21,6 @@ const recipeShow = () => {
     finally {
       statement.finalizeAsync();
     }
-    
   }
 
   async function deleteRecipe() {

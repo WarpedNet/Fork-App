@@ -1,9 +1,9 @@
 import { View, Text, Image } from 'react-native'
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as SQLite from 'expo-sqlite'
-import { Divider } from '@rneui/base'
-import { Button, Input } from "@rneui/themed"
+import { ButtonGroup, Divider } from '@rneui/base'
+import { Button, Input, Overlay, CheckBox } from "@rneui/themed"
 import { MaterialCommunityIcons } from '@expo/vector-icons'  
 import { router } from 'expo-router'
 import * as ImagePicker from 'expo-image-picker'
@@ -91,6 +91,7 @@ const createRecipe = () => {
           <View className="h-[10vh] w-full justify-center items-center">
           <Image source={{uri: "data:image/png;base64,"+recipe.banner}} width={300} height={100}></Image>
           </View>
+
           {/* Bottom Bar */}
           <View className="h-[10vh]">
             <Divider width={220} color='white' className="align-bottom"></Divider>
