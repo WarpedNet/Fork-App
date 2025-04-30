@@ -3,6 +3,7 @@ import { React, useState } from 'react'
 import { SafeAreaView } from "react-native-safe-area-context"
 import CustomInputField from '../../components/CustomInputField'
 import { Link, router } from "expo-router"
+import * as SecureStore from 'expo-secure-store'
 
 // 
 // Login code for letting the user log in to the app.
@@ -11,6 +12,30 @@ import { Link, router } from "expo-router"
 // login function
 const login = () => {
   const [formField, setformField] = useState({username: "", password: ""})
+
+  async function loginUser() {
+    try {
+      const api_address = process.env.EXPO_PUBLIC_API_ADDRESS
+      const response = await fetch(`${api_address}/login`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formField),
+      });
+      if (response.status == 401) {
+        alert("Incorrect Login Details")
+      }
+      if (response.status == 200) {
+        await SecureStore.setItemAsync("FORK_USER_TOKEN", await response.json());
+        router.push("../(pages)/account");
+      }
+    }
+    catch (error) {
+      alert("Error creating user");
+    }
+}
   return (
     <SafeAreaView className="bg-primary h-full w-full">
       {/* setting the items to centre */}
@@ -31,11 +56,7 @@ const login = () => {
           <Text className="text-base text-white px-3 py-2">Don't have an account? <Link href="./register" className="text-secondary-100">Register Here</Link></Text>
 
           {/* temporary alert response to show user input based on log in button press */}
-          <TouchableOpacity className="bg-secondary rounded-full px-3 py-2" onPress={() => 
-            {alert("Username: "+formField.username+"\nPassword: "+formField.password)
-              router.push("../(pages)/account")
-            }
-            }>
+          <TouchableOpacity className="bg-secondary rounded-full px-3 py-2" onPress={() => {loginUser()}}>
             <Text className="text-white text-2xl">Log In</Text>
           </TouchableOpacity>
         </View>

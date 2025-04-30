@@ -19,7 +19,7 @@ const register = () => {
   async function register() {
     try {
       const api_address = process.env.EXPO_PUBLIC_API_ADDRESS
-      const response = await fetch(`${api_address}/user`, {
+      const response = await fetch(`${api_address}/register`, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
@@ -27,12 +27,13 @@ const register = () => {
         },
         body: JSON.stringify(formField),
       });
+      if (response.status == 401) {
+        alert("User already exists")
+      }
+      router.push("./login");
     }
     catch (error) {
       alert("Error creating user");
-    }
-    finally {
-      router.push("./login");
     }
   }
   return (
