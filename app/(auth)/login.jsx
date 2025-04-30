@@ -22,18 +22,19 @@ const login = () => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formField),
+        body: JSON.stringify({username: formField.username, password: formField.password}),
       });
       if (response.status == 401) {
         alert("Incorrect Login Details")
       }
       if (response.status == 200) {
-        await SecureStore.setItemAsync("FORK_USER_TOKEN", await response.json());
+        // Stores the user token for session into secure store to be able to send with future data for authentication
+        await SecureStore.setItemAsync("FORK_USER_TOKEN", (await response.json()).token);
         router.push("../(pages)/account");
       }
     }
     catch (error) {
-      alert("Error creating user");
+      alert("Error creating user: "+error);
     }
 }
   return (

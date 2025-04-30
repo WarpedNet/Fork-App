@@ -25,7 +25,7 @@ const register = () => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formField),
+        body: JSON.stringify({username: formField.username, email: formField.email, password: formField.password}),
       });
       if (response.status == 401) {
         alert("User already exists")
@@ -33,7 +33,7 @@ const register = () => {
       router.push("./login");
     }
     catch (error) {
-      alert("Error creating user");
+      alert("Error creating user: "+error);
     }
   }
   return (
