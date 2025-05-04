@@ -40,6 +40,7 @@ const recipeShow = () => {
     try {
       const api_address = process.env.EXPO_PUBLIC_API_ADDRESS
       const userToken = await SecureStore.getItemAsync("FORK_USER_TOKEN")
+      
       const response = await fetch(`${api_address}/fork`, {
         method: 'PUT',
         headers: {
@@ -48,6 +49,7 @@ const recipeShow = () => {
         },
         body: JSON.stringify({
           token: userToken,
+          centralID: recipe.centralID,
           parentID: null,
           recipeName: recipe.name,
           recipeDesc: recipe.description,
@@ -56,12 +58,27 @@ const recipeShow = () => {
           icon: recipe.icon,
         }),
       });
-      if (response.status == 401) {
+
+      if (response.status == 200) {
+        const centralID = await response.json()
+        const db = await SQLite.openDatabaseAsync("fork.db");
+
+        const statement = await db.prepareAsync(`UPDATE forks SET
+          centralID = $centralID
+          WHERE id = $id
+        `);
+
+        try {
+          await statement.executeAsync({centralID: centralID,id: recipe.id})
+          alert("Fork Created!");
+        }
+        catch {
+          alert("Failed to update local database!")
+        }
+      }
+      else if (response.status == 401) {
         alert("Login token expired");
         router.push("login");
-      }
-      if (response.status == 200) {
-        alert("Fork Created!");
       }
     }
     catch (error) {

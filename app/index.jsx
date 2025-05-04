@@ -15,6 +15,7 @@ async function createDatabase() {
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS forks(
     id INTEGER PRIMARY KEY NOT NULL,
+    centralID INTEGER,
     creator_name TEXT,
     name TEXT NOT NULL,
     description TEXT,

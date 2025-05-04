@@ -25,6 +25,7 @@ const viewLocal = () => {
   const deleteDB = async() => {
     const db = await SQLite.openDatabaseAsync("fork.db");
     await db.execAsync("DROP TABLE IF EXISTS forks")
+    alert("Deleted forks table!")
   }
 
   return (

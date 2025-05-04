@@ -72,6 +72,7 @@ const recipeEdit = () => {
     if (recipe.name) {
       const db = await SQLite.openDatabaseAsync("fork.db");
       const statement = await db.prepareAsync(`UPDATE forks SET
+        centralID = $centralID,
         creator_name = $creator_name,
         name = $name,
         description = $description,
@@ -83,7 +84,17 @@ const recipeEdit = () => {
         WHERE id = $id
         `);
       try {
-        await statement.executeAsync({$creator_name: recipe.creator_name, $name: recipe.name, $description: recipe.description, $method: recipe.method, $banner: recipe.banner, $icon: recipe.icon, $image: recipe.image, $count: recipe.count, $id: recipeID});
+        await statement.executeAsync({
+          $centralID: recipe.centralID,
+          $creator_name: recipe.creator_name,
+          $name: recipe.name,
+          $description: recipe.description,
+          $method: recipe.method,
+          $banner: recipe.banner,
+          $icon: recipe.icon,
+          $image: recipe.image,
+          $count: recipe.count,
+          $id: recipeID});
       }
       finally {
         statement.finalizeAsync()

@@ -66,9 +66,19 @@ const createRecipe = () => {
   async function saveRecipeLocal() {
     if (recipe.name.length > 0) {
       const db = await SQLite.openDatabaseAsync("fork.db");
-      const statement = await db.prepareAsync('INSERT INTO forks (creator_name, name, description, method, banner, icon, image, count) VALUES ($creator_name, $name, $description, $method, $banner, $icon, $image, $count);');
+      const statement = await db.prepareAsync('INSERT INTO forks (centralID, creator_name, name, description, method, banner, icon, image, count) VALUES ($centralID ,$creator_name, $name, $description, $method, $banner, $icon, $image, $count);');
       try {
-        await statement.executeAsync({$creator_name: recipe.creator_name, $name: recipe.name, $description: recipe.description, $method: recipe.method, $banner: recipe.banner, $icon: recipe.icon, $image: recipe.image, $count: recipe.count})
+        await statement.executeAsync({
+          $centralID: null,
+          $creator_name: recipe.creator_name,
+          $name: recipe.name,
+          $description: recipe.description,
+          $method: recipe.method,
+          $banner: recipe.banner,
+          $icon: recipe.icon,
+          $image: recipe.image,
+          $count: recipe.count
+        })
       }
       finally {
         await statement.finalizeAsync();
