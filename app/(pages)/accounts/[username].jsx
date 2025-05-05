@@ -1,9 +1,14 @@
 import { View, Text, Image } from 'react-native'
 import { React, useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import * as SQLite from 'expo-sqlite'
 import { Divider } from '@rneui/base'
 import { Button, Input } from "@rneui/themed"
+
+
+const accountEdit = () => {
+
+}
+
 
 export default function accountEdit(){
   return (
@@ -12,16 +17,19 @@ export default function accountEdit(){
         {/* header (obviously) */}
         <Header backgroundColor="#00FF00" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} centerComponent={{text: 'Edit Account', style:{fontSize: 20, fontWeight: "bold"}}} />
 
-        <View className="h-10 border-2 border-solid items-center">
-        <TouchableOpacity onPress={console.log("pressed edit settings")}>
-        <Text>Edit Account</Text>
-        </TouchableOpacity>
+        <View className="flex flex-col">
+        <Input /*value=username*/ /*onchangeText=setusernamefunc*/ placeholder="New Username"/>
+        <Input /*value=password*/ placeholder="Password"/>
+        <Input /*value=password*/ placeholder="Confirm Password"/>
+
         </View>
-        <View className="h-10 border-2 border-solid items-center">
-        <TouchableOpacity onPress={console.log("pressed edit account")}>
-        <Text>Logout</Text>
-        </TouchableOpacity>
-        </View>
+        <Divider width={150}/>
+        
+        <View className="flex flex-row">
+        <Button className="dark:bg-secondary-300 w-[15vw] h-[15vw]"><Text className="text-center text-xl">Save</Text></Button>
+        <Button className="dark:bg-secondary-300 w-[15vw] h-[15vw]"><Text className="text-center text-xl">Cancel</Text></Button>
+
+
       </SafeAreaView>
 
     </SafeAreaProvider>
