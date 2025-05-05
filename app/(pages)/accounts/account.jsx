@@ -36,12 +36,12 @@ export default function Account(){
 
         <View className="h-10 border-2 border-solid items-center">
         <TouchableOpacity onPress={console.log("pressed edit settings")}>
-        <Text>Edit Settings</Text>
+        <Text>Edit Account</Text>
         </TouchableOpacity>
         </View>
         <View className="h-10 border-2 border-solid items-center">
         <TouchableOpacity onPress={console.log("pressed edit account")}>
-        <Text>Edit Account</Text>
+        <Text>Logout</Text>
         </TouchableOpacity>
         </View>
       </SafeAreaView>

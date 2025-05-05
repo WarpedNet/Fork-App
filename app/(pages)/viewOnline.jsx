@@ -49,7 +49,7 @@ export default function Home() {
   }, [])
   
   // Prevents render until data is fetched (Man I love async)
-  if (recipies == null) {
+  if (recipes == null) {
     return (<ActivityIndicator />)
   }
   return (
