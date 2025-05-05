@@ -22,7 +22,6 @@ async function createDatabase() {
     method TEXT,
     banner TEXT,
     icon TEXT,
-    image TEXT,
     count INTEGER 
     );
 

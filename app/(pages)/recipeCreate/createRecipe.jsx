@@ -23,7 +23,6 @@ const createRecipe = () => {
     banner: "",
     icon: "",
     ingredients: "",
-    image: "",
     count: null
   });
 
@@ -95,9 +94,11 @@ const toggleIngredients = () => {
   // Saves the current recipe data locally to the device (recipe must have a name)
   // add ingredients to this func
   async function saveRecipeLocal() {
+    console.log("Called")
     if (recipe.name.length > 0) {
+      console.log("Called inside if")
       const db = await SQLite.openDatabaseAsync("fork.db");
-      const statement = await db.prepareAsync('INSERT INTO forks (centralID, creator_name, name, description, method, banner, icon, image, count) VALUES ($centralID ,$creator_name, $name, $description, $method, $banner, $icon, $image, $count);');
+      const statement = await db.prepareAsync('INSERT INTO forks (centralID, creator_name, name, description, method, banner, icon, count) VALUES ($centralID ,$creator_name, $name, $description, $method, $banner, $icon, $count);');
       try {
         await statement.executeAsync({
           $centralID: null,
@@ -107,7 +108,6 @@ const toggleIngredients = () => {
           $method: recipe.method,
           $banner: recipe.banner,
           $icon: recipe.icon,
-          $image: recipe.image,
           $count: recipe.count
           //$ingredients: recipe.ingredients or whatever we call it in db
         })
@@ -117,6 +117,9 @@ const toggleIngredients = () => {
         router.push("../viewLocal");
       }
     }
+    else {
+      alert("Recipe Name is required!")
+    }
   }
 
   return (
@@ -125,7 +128,8 @@ const toggleIngredients = () => {
           <Input value={recipe.name} errorMessage='You need a recipe name!' rightIcon={<MaterialCommunityIcons name='silverware-fork' size={20} />} onChangeText={(e) => setRecipe({...recipe, name: e})} placeholder="Your Recipe Name"/>
           <Input value={recipe.description} onChangeText={(e) => setRecipe({...recipe, description: e})} placeholder="Description. 30 words max!"/>
           <Button className="dark: bg-secondary-300 w-20 h-20" onPress={() => toggleIngredients()}><Text className="text-center text-xl">Add Ingredients</Text></Button>
-        <Overlay isVisible={visible} fullscreen={true}  onBackdropPress={toggleIngredients}>
+        
+        <Overlay isVisible={visible} fullscreen={true} onBackdropPress={toggleIngredients}>
           <Input onChangeText={console.log("changed ingredient")/*(e) => setRecipe{... recipe, ingredients: e*/} placeholder="Add new ingredient"/>
             <ButtonGroup buttons={['REPLACE', 'WITH', 'recipe.ingredients']}
             onPress={(value) => {
@@ -133,7 +137,7 @@ const toggleIngredients = () => {
              console.log(value);
 
             }}
-         />
+            />
         </Overlay>
 
 

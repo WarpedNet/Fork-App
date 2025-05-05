@@ -79,7 +79,6 @@ const recipeEdit = () => {
         method = $method,
         banner = $banner,
         icon = $icon,
-        image = $image,
         count = $count
         WHERE id = $id
         `);
@@ -92,7 +91,6 @@ const recipeEdit = () => {
           $method: recipe.method,
           $banner: recipe.banner,
           $icon: recipe.icon,
-          $image: recipe.image,
           $count: recipe.count,
           $id: recipeID});
       }
