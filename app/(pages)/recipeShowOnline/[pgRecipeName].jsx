@@ -13,13 +13,15 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const recipeShow = () => {
 
 const [recipe, setrecipe] = useState({
+  customer_id: "",
   name: "",
-  icon: "",
-  desc: "",
+  description: "",
   method: "",
-  bannerimg: ""
+  banner: "",
+  icon: "",
+  count: "",
 })
-const { recipeName } = useLocalSearchParams()
+const { recipeID } = useLocalSearchParams()
 
 const BackToHome = async() => {
   router.push("/home")
@@ -35,16 +37,24 @@ const submitComment = async() => {
   }
 useEffect(() => {
   async function getRecipe() {
-    
-    const db = await SQLite.openDatabaseAsync("fork.db");
-    const result = await db.getFirstAsync("SELECT * FROM Forks WHERE recipe_name = ?", recipeName);
-    setrecipe({
-      name: result.recipe_name,
-      icon: result.icon,
-      desc: result.recipe_desc,
-      method: result.recipe_method,
-      bannerimg: result.banner_img
-    })
+    try {
+      // Uses expo's .env file feature (All entries in the .env file must start with EXPO_PUBLIC for expo to recognise them)
+      const api_address = process.env.EXPO_PUBLIC_API_ADDRESS
+      const response = await fetch(`${api_address}/fork/${recipeID}`);
+      const data = await response.json();
+      setrecipe({
+        customer_id: data.customer_id,
+        name: data.name,
+        description: data.description,
+        method: data.method,
+        banner: data.banner,
+        icon: data.icon,
+        count: data.count,
+      });
+    }
+    catch (error) {
+      alert(`Failed to connect to API`);
+    }
   }
   getRecipe()
 }, [])
@@ -55,9 +65,9 @@ useEffect(() => {
       <ScrollView className="h-full w-full">
           <Text className="text-xl font-extrabold md: text-base font-bold text-center">{recipe.name}</Text>
           <Image source={{uri: "data:image/png;base64,"+recipe.icon}} width={100} height={100}></Image>
-          <Text>{recipe.desc}</Text>
+          <Text>{recipe.description}</Text>
           <Text>{recipe.method}</Text>
-          <Image source={{uri: "data:image/png;base64,"+recipe.bannerimg}} width={600} height={200}></Image>
+          <Image source={{uri: "data:image/png;base64,"+recipe.banner}} width={600} height={200}></Image>
           <TextInput className="absolute bottom-0 left-0" maxLength={40} placeholder="Comment on this..."/>
           {/* Bottom Bar */}
           <View className="h-2/4">
