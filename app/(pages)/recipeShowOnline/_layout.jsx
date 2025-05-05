@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router'
 
-const recipeShowLayout = () => {
+const recipeShowOnlineLayout = () => {
   return (
     <Stack>
         <Stack.Screen name="[pgRecipeName]" options={{headerShown: false}}/>
