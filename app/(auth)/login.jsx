@@ -30,7 +30,7 @@ const login = () => {
       if (response.status == 200) {
         // Stores the user token for session into secure store to be able to send with future data for authentication
         await SecureStore.setItemAsync("FORK_USER_TOKEN", (await response.json()).token);
-        router.push("../(pages)/account");
+        router.push("../(pages)/viewOnline");
       }
     }
     catch (error) {
