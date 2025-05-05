@@ -62,7 +62,7 @@ export default function Home() {
         {/* for searchBar: search function for onChangeText */}
         <Text className="text-center">Browse the forks, or:</Text>
         <View style={[{width: "40%", position:"absolute", top:220, right:120, backgroundColor: "green"}]}>
-          <Button  //button takes you to online version of fork edit
+          <Button 
           title="Create your Own!"
           color="lime"
            />

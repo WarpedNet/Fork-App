@@ -31,8 +31,8 @@ const viewLocal = () => {
   return (
     <SafeAreaView>
       <View className="h-full w-full">
-        <Header backgroundColor="#00ff00" leftComponent={{icon:'home', style: { color: 'black' }}}centerComponent={{text: "Saved Forks", style: {font: 'bold', fontSize: 20}}} />
-        <FlatList numColumns={3} data={recipes} renderItem={(recipe) => <RecipeIconDisplay ID={recipe.item.id} recipeName={recipe.item.name} icon={recipe.item.icon}/>}/>
+        <Header backgroundColor="#00ff00" leftComponent={{icon:'home', style: { color: 'black' }}}centerComponent={{text: "Saved Forks", style: {font: 'bold', fontSize: 20}}} /> 
+        <VirtualizedList style={{flex:1, marginTop:50}} data={recipes} renderItem={(recipe) => <RecipeIconDisplay ID={recipe.item.id} recipeName={recipe.item.name} icon={recipe.item.icon}/>}/>
 
           {/* Bottom Bar */}
           <View className="h-[10vh]">
