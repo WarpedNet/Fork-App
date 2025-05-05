@@ -48,6 +48,12 @@ export default function Home() {
     fetchRecipes()
   }, [])
   
+  async function search(query) {
+    const api_address = process.env.EXPO_PUBLIC_API_ADDRESS
+    const response = await fetch(`${api_address}/search/${query}`);
+    const data = await response.json();
+    setrecipes(data);
+  }
   // Prevents render until data is fetched (Man I love async)
   if (recipes == null) {
     return (<ActivityIndicator />)
@@ -56,8 +62,8 @@ export default function Home() {
     <SafeAreaProvider>
       <SafeAreaView className="bg-primary h-full w-full">
         {/* big title for the thing */}
-        <Header backgroundColor="#00FF00" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}}leftComponent={{icon: 'home', style:{fontSize: 20}}} centerComponent={{text: 'Home', style:{fontSize: 20, fontWeight: "bold"}}} />
-        <SearchBar platform={'android'} lightTheme={"true"} placeholder="Find Forks..." />
+        <Header backgroundColor="#00FF00" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} leftComponent={{icon: 'home', style:{fontSize: 20}}} centerComponent={{text: 'Home', style:{fontSize: 20, fontWeight: "bold"}}} />
+        <SearchBar platform={'android'} lightTheme={"true"} placeholder="Find Forks..." onChangeText={(e) => {search(e)}}/>
         <Image className="absolute w-10 h-10" source={require('../../assets/pie.jpg')}/>
         {/* for searchBar: search function for onChangeText */}
         <Text className="text-center">Browse the forks, or:</Text>

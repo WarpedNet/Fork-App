@@ -1,12 +1,8 @@
 import { Stack } from "expo-router"
-import "../globals.css"
 
 // 
 // Stack layout for account and account settings pages.
 // 
-
-
-
 
 const AccountLayout = () => {
     return (

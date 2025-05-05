@@ -8,10 +8,6 @@ const tabLayout = () => {
             <Stack.Screen name="recipeShow" options={{headerShown: false}}/>
             <Stack.Screen name="recipeCreate" options={{headerShown: false}}/>
             <Stack.Screen name="viewOnline" options={{headerShown: false}}/>
-<<<<<<< HEAD
-            <Stack.Screen name="account" options={{headerShown: false}} />
-=======
->>>>>>> refs/remotes/origin/master
         </Stack>
         
     );
