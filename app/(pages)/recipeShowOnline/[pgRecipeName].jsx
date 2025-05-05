@@ -1,4 +1,4 @@
-import { View, Image, TextInput } from 'react-native'
+import { View, Image, ScrollView, TextInput } from 'react-native'
 import { React, useState, useEffect } from 'react'
 import { Text, Button, Rating } from '@rneui/themed'
 import { Divider } from '@rneui/base'
@@ -52,7 +52,7 @@ useEffect(() => {
   return (
     <View>
     <SafeAreaView>
-      <View className="h-full w-full">
+      <ScrollView className="h-full w-full">
           <Text className="text-xl font-extrabold md: text-base font-bold text-center">{recipe.name}</Text>
           <Image source={{uri: "data:image/png;base64,"+recipe.icon}} width={100} height={100}></Image>
           <Text>{recipe.desc}</Text>
@@ -67,7 +67,7 @@ useEffect(() => {
             <Button className="dark:bg-secondary-300 w-[10vw] h-[10vw]" onPress={() => submitRating()}><Text className="text-center text-m">Submit Rating + Comment</Text></Button>
             </View>
           </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
     </View>
   )

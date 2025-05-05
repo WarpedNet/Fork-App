@@ -9,6 +9,9 @@ import { router } from 'expo-router'
 import * as ImagePicker from 'expo-image-picker'
 import * as ImageManipulator from "expo-image-manipulator"
 
+
+
+
 const createRecipe = () => {
 
   // Stores the recipe info
@@ -19,9 +22,18 @@ const createRecipe = () => {
     method: "",
     banner: "",
     icon: "",
+    ingredients: "",
     image: "",
     count: null
   });
+
+
+  const [visible, setVisible] = useState(false);
+
+const toggleIngredients = () => {
+  setVisible(!visible)
+}
+
 
   // Image picker (allows user to select an image from their library)
   async function pickImage(aspectX, aspectY, resX, resY) {
@@ -62,7 +74,26 @@ const createRecipe = () => {
     setRecipe({...recipe, icon: image.base64});
   }
 
+
+  //function to allow the user to select ingredients (or pick new ones if they do not exist in the db)
+  //since this is a local db we can just save them locally
+  /*async function retrieveIngredients() {
+    const db = await.SQLite.openDatabaseAsync("fork.db");
+    const statement = await.db.prepareAsync('SELECT FROM forks (ingredients) VALUES ($ingredients)');
+    try {
+      await statement.executeAsync({
+        $ingredients = recipe.ingredients,
+      })
+    }
+    finally {
+      await statement.finalizeAsync();
+    }
+  }
+  */
+
+
   // Saves the current recipe data locally to the device (recipe must have a name)
+  // add ingredients to this func
   async function saveRecipeLocal() {
     if (recipe.name.length > 0) {
       const db = await SQLite.openDatabaseAsync("fork.db");
@@ -78,6 +109,7 @@ const createRecipe = () => {
           $icon: recipe.icon,
           $image: recipe.image,
           $count: recipe.count
+          //$ingredients: recipe.ingredients or whatever we call it in db
         })
       }
       finally {
@@ -92,7 +124,20 @@ const createRecipe = () => {
       <View className="h-[50vh] w-full">
           <Input value={recipe.name} errorMessage='You need a recipe name!' rightIcon={<MaterialCommunityIcons name='silverware-fork' size={20} />} onChangeText={(e) => setRecipe({...recipe, name: e})} placeholder="Your Recipe Name"/>
           <Input value={recipe.description} onChangeText={(e) => setRecipe({...recipe, description: e})} placeholder="Description. 30 words max!"/>
-          <Input value={recipe.method} onChangeText={(e) => setRecipe({...recipe, method: e})} placeholder="Method. Use commas to separate your steps, and be concise!"/>
+          <Button className="dark: bg-secondary-300 w-20 h-20" onPress={() => toggleIngredients()}><Text className="text-center text-xl">Add Ingredients</Text></Button>
+        <Overlay isVisible={visible} fullscreen={true}  onBackdropPress={toggleIngredients}>
+          <Input onChangeText={console.log("changed ingredient")/*(e) => setRecipe{... recipe, ingredients: e*/} placeholder="Add new ingredient"/>
+            <ButtonGroup buttons={['REPLACE', 'WITH', 'recipe.ingredients']}
+            onPress={(value) => {
+            //replace with a getRecipe call
+             console.log(value);
+
+            }}
+         />
+        </Overlay>
+
+
+        <Input value={recipe.method} onChangeText={(e) => setRecipe({...recipe, method: e})} placeholder="Method. Use commas to separate your steps, and be concise!"/>
           <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => getIconImage()}><Text className="text-center text-xl">Icon Image</Text></Button>
           <View className="h-[10vh] w-full justify-center items-center"> 
             <Image source={{uri: "data:image/png;base64,"+recipe.icon}} width={100} height={100}></Image>
