@@ -1,4 +1,4 @@
-import { View, Text, VirtualizedList, ActivityIndicator } from 'react-native'
+import { View, Text, VirtualizedList, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
 import { React, useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as SQLite from 'expo-sqlite'
@@ -17,7 +17,8 @@ const getItem = (data, index) => ({
   icon: data[index].icon,
   });
 
-const Item = ({id, title, description, icon}) => (
+const Item = ({id, title, description, icon}) => {
+  return (
   <View className="rounded-xl p-10" style={{height:100, marginVertical: 10, backgroundColor:'white', justifyContent: 'center', borderColor: 'grey', borderTopWidth: 2, borderBottomWidth: 2, borderLeftWidth:2, borderRightWidth:2}}>
     <TouchableOpacity onPress={()=>{router.push({pathname: '/recipeShowOnline/[pgRecipeName]', params: {recipeID: id}})}}>
       <Text className="text-xl font-bold">{title}</Text>
@@ -26,7 +27,8 @@ const Item = ({id, title, description, icon}) => (
     {/* If the icon is null, set default image */}
     <Image className="absolute right-20 w-10 h-10" source={(icon != null) ? {uri: "data:image/png;base64,"+icon} : require("../../assets/pie.jpg")}/>
   </View>
-)
+  )
+}
   const [recipes, setrecipes] = useState(null); 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -55,31 +57,31 @@ const Item = ({id, title, description, icon}) => (
   // Prevents render until data is fetched (Man I love async)
   if (recipes == null) {
     return (<ActivityIndicator />)
-    }
+  }
 
-    return (
-    <SafeAreaView className="flex flex-col gap-4">
-            <View className=" relative w-3/5 h-1/9" >
-                <Text className="text-xl text-center font-bold">Welcome, User</Text>
-                <View className="flex flex-row">
-                <Button color="green" className="gap-10" buttonStyle={{borderRadius:5, width: 125}}>Account</Button>
-                <Text>                                      </Text>
-                <Button color="green" buttonStyle={{borderRadius:5, width: 125}}>Your Forks</Button>
-                </View>
-            </View>
+  return (
+  <SafeAreaView className="flex flex-col gap-4">
+    <View className=" relative w-3/5 h-1/9" >
+        <Text className="text-xl text-center font-bold">Welcome, User</Text>
+        <View className="flex flex-row">
+        <Button color="green" className="gap-10" buttonStyle={{borderRadius:5, width: 125}}>Account</Button>
+        <Text>                                      </Text>
+        <Button color="green" buttonStyle={{borderRadius:5, width: 125}}>Your Forks</Button>
+        </View>
+    </View>
 
-            <View className=" relative inset-y-0 w-full h-1/4 border-solid border-2 rounded">
-                <Text className="text-lg text-center font-bold">Popular Forks</Text>
-        <VirtualizedList style={{flex:1, marginTop:50}}
-        data={recipes}
-        initialNumToRender={3}
-        renderItem={({item}) => <RecipeIconDisplay id={item.item.id} title={item.item.title} description={item.item.description} icon={item.item.icon} />}
-        keyExtractor={item => item.id}
-        getItemCount={(data) => data.length}
-        getItem={getItem}
-        />
-            </View>
+    <View className=" relative inset-y-0 w-full h-1/4 border-solid border-2 rounded">
+        <Text className="text-lg text-center font-bold">Popular Forks</Text>
+    </View>
+    <VirtualizedList style={{flex:1, marginTop:50}}
+    data={recipes}
+    initialNumToRender={5}
+    renderItem={({item}) => <Item id={item.id} title={item.title} description={item.description} icon={item.icon} />}
+    keyExtractor={item => item.id}
+    getItemCount={(data) => data.length}
+    getItem={getItem}
+    />
 
-    </SafeAreaView>
-    )
+  </SafeAreaView>
+  )
 }
