@@ -61,11 +61,13 @@ const Item = ({id, title, description, icon}) => {
 
   return (
   <SafeAreaView className="bg-primary w-full h-full">
-    <View className=" relative " >
+        <Header backgroundColor="green" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} centerComponent={{text: 'Home', style:{fontSize: 20, fontWeight: "bold"}}} />
+    <View>
         <Text className="text-xl text-center rounded-sm p-5 font-bold">Welcome, User</Text>
         <View className="flex flex-row gap-5">
-        <Button color="green" onPress={() => router.push("./accounts/account")} buttonStyle={{borderRadius:5, width: 125}}>Account</Button>
-        <Button color="green" buttonStyle={{borderRadius:5, width: 125}}>Your Forks</Button>
+        <Button color="green" onPress={() => router.push("./accounts/account")} buttonStyle={{borderRadius:5, width: 110, marginLeft:10, marginBottom: 10 }}>Account</Button>
+        <Button color="green" buttonStyle={{borderRadius:5, width: 110}}>Your Forks</Button>
+        <Button color="green" onPress={() => router.push("./viewOnline")} buttonStyle={{borderRadius:5, width: 110}}>All Forks</Button>
         </View>
     </View>
 

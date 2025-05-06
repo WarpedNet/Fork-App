@@ -125,11 +125,11 @@ const toggleIngredients = () => {
   return (
     <SafeAreaView>
       <View className="h-[50vh] w-full">
-          <Input value={recipe.name} errorMessage='You need a recipe name!' rightIcon={<MaterialCommunityIcons name='silverware-fork' size={20} />} onChangeText={(e) => setRecipe({...recipe, name: e})} placeholder="Your Recipe Name"/>
+          <Input value={recipe.name} rightIcon={<MaterialCommunityIcons name='silverware-fork' size={20} />} onChangeText={(e) => setRecipe({...recipe, name: e})} placeholder="Your Recipe Name"/>
           <Input value={recipe.description} onChangeText={(e) => setRecipe({...recipe, description: e})} placeholder="Description. 30 words max!"/>
           <Button className="dark: bg-secondary-300 w-20 h-20" onPress={() => toggleIngredients()}><Text className="text-center text-xl">Add Ingredients</Text></Button>
         
-        <Overlay isVisible={visible} fullscreen={true} 
+        <Overlay isVisible={visible} fullscreen={true}
           onBackdropPress={toggleIngredients} 
           overlayStyle={{width:400, height:200}}
           backdropStyle={{opacity: 0.8}}>
@@ -161,8 +161,8 @@ const toggleIngredients = () => {
           <View className="h-[10vh]">
             <Divider width={220} color='white' className="align-bottom"></Divider>
             <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
-              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" iconRight={<MaterialCommunityIcons name='silverware-fork' size={20} />} onPress={() => saveRecipeLocal()}><Text className="text-center text-xl">Save Local</Text></Button>
-              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => router.push("../viewLocal")}><Text className="text-center text-xl">Cancel</Text></Button>
+              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" iconRight={<MaterialCommunityIcons name='silverware-fork' size={20} />} onPress={() => saveRecipeLocal()}><Text className="text-center text-xl">Create Recipe</Text></Button>
+              <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => router.back()}><Text className="text-center text-xl">Cancel</Text></Button>
             </View>
           </View>
       </View>

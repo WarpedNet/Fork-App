@@ -6,6 +6,7 @@ import { Avatar, Header} from "@rneui/base";
 import { SearchBar } from '@rneui/themed';
 import ForkComponent from "../../components/ForkComponent";
 import { router } from "expo-router";
+
 // generating dummy data for a list
 
 const getItem = (data, index) => ({
@@ -62,21 +63,21 @@ export default function viewOnline() {
     <SafeAreaProvider>
       <SafeAreaView className="bg-primary h-full w-full">
         {/* big title for the thing */}
-        <Header backgroundColor="#00FF00" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} leftComponent={{icon: 'home', style:{fontSize: 20}}} centerComponent={{text: 'Home', style:{fontSize: 20, fontWeight: "bold"}}} />
+        <Header backgroundColor="green" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} centerComponent={{text: 'All Forks', style:{fontSize: 20, fontWeight: "bold"}}} />
         <SearchBar platform={'android'} lightTheme={"true"} placeholder="Find Forks..." onChangeText={(e) => {search(e)}}/>
         <Image className="absolute w-10 h-10" source={require('../../assets/pie.jpg')}/>
         {/* for searchBar: search function for onChangeText */}
         <Text className="text-center">Browse the forks, or:</Text>
         <View style={[{width: "40%", position:"absolute", top:220, right:120, backgroundColor: "green"}]}>
           <Button 
+            onPress={() => router.push("./recipeCreate/createRecipe")}
           title="Create your Own!"
-          color="lime"
+          color="green"
            />
         </View>
         {/* creating a virtualized list, this is for saving memory when we have multiple recipes, it will only visualize a set amount at a time (in this case, 5) */}
-        <VirtualizedList style={{flex:1, marginVertical:50, height:10}}
+        <VirtualizedList style={{flex:1, marginTop:50}}
         data={recipes}
-          windowSize={20}
         initialNumToRender={5}
         renderItem={({item}) => <Item id={item.id} title={item.title} description={item.description} icon={item.icon} />}
         keyExtractor={item => item.id}

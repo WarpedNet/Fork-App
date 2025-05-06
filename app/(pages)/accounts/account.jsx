@@ -12,9 +12,8 @@ export default function Account(){
     <SafeAreaProvider>
       <SafeAreaView className="bg-primary h-full w-full">
         {/* header (obviously) */}
-        <Header backgroundColor="#00FF00" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} centerComponent={{text: 'Your Account', style:{fontSize: 20, fontWeight: "bold"}}} />
-
-        <View className="size-40 items-center">
+        <Header backgroundColor="green" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} centerComponent={{text: 'Account', style:{fontSize: 20, fontWeight: "bold"}}} />
+        <View className="size-16 items-center">
           <Avatar size={64}
           rounded
           icon={{name: 'adb', type: 'material'}}
@@ -23,7 +22,7 @@ export default function Account(){
           <Text>Account Name</Text>
         </View>
 
-        <View className="h-1/2 w-full items-center">
+        <View className="h-30 w-full items-center">
             <TextInput className="h-40 w-full"
             multiline={true}
             numberOfLines={10}
