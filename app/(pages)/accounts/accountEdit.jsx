@@ -21,7 +21,6 @@ const accountEdit = () => {
   }
 
 
-
   return (
     <SafeAreaProvider>
       <SafeAreaView className="bg-primary h-full w-full">
@@ -64,6 +63,7 @@ const accountEdit = () => {
 
     </SafeAreaProvider>
   )
+}
 
 }
 }
