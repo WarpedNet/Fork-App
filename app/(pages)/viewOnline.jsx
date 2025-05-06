@@ -29,7 +29,7 @@ const Item = ({id, title, description, icon}) => (
   </View>
 )
 
-export default function Home() { 
+export default function viewOnline() { 
   // Stores the recipies fetched from database
   const [recipes, setrecipes] = useState(null); 
   // Fetches data from api on page load

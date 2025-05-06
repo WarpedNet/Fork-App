@@ -129,8 +129,14 @@ const toggleIngredients = () => {
           <Input value={recipe.description} onChangeText={(e) => setRecipe({...recipe, description: e})} placeholder="Description. 30 words max!"/>
           <Button className="dark: bg-secondary-300 w-20 h-20" onPress={() => toggleIngredients()}><Text className="text-center text-xl">Add Ingredients</Text></Button>
         
-        <Overlay isVisible={visible} fullscreen={true} onBackdropPress={toggleIngredients}>
+        <Overlay isVisible={visible} fullscreen={true} 
+          onBackdropPress={toggleIngredients} 
+          overlayStyle={{width:400, height:200}}
+          backdropStyle={{opacity: 0.8}}>
+
           <Input onChangeText={console.log("changed ingredient")/*(e) => setRecipe{... recipe, ingredients: e*/} placeholder="Add new ingredient"/>
+          <Button><Text>Add</Text></Button>
+          <Divider width={2}></Divider>
             <ButtonGroup buttons={['REPLACE', 'WITH', 'recipe.ingredients']}
             onPress={(value) => {
             //replace with a getRecipe call
