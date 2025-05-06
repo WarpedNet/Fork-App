@@ -15,7 +15,7 @@ const accountEdit = () => {
 
   const toggleuserOverlay = () => {
     setuserNameVisible(!userNamevisible)
-}
+  }
   const togglePassOverlay = () => {
     setPassVisible(!passVisible)
   }
@@ -63,7 +63,5 @@ const accountEdit = () => {
 
     </SafeAreaProvider>
   )
-}
-
-}
+  }
 }

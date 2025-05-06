@@ -6,8 +6,6 @@ import { Avatar, Header} from "@rneui/base";
 import { SearchBar } from '@rneui/themed';
 import ForkComponent from "../../components/ForkComponent";
 import { router } from "expo-router";
-import RecipeIconDisplay from "../../components/RecipeIconDisplay";
-;
 // generating dummy data for a list
 
 const getItem = (data, index) => ({
