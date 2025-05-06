@@ -12,7 +12,7 @@ const accountEdit = () => {
   const toggleuserOverlay = () => {
     setuserNameVisible(!userNamevisible)
 }
-}
+
 
   return (
     <SafeAreaProvider>
@@ -43,5 +43,6 @@ const accountEdit = () => {
 
     </SafeAreaProvider>
   )
+}
 
 

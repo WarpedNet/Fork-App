@@ -78,7 +78,7 @@ export default function viewOnline() {
         <VirtualizedList style={{flex:1, marginTop:50}}
         data={recipes}
         initialNumToRender={5}
-        renderItem={({item}) => <RecipeIconDisplay id={item.item.id} title={item.item.title} description={item.item.description} icon={item.item.icon} />}
+        renderItem={({item}) => <Item id={item.id} title={item.title} description={item.description} icon={item.icon} />}
         keyExtractor={item => item.id}
         getItemCount={(data) => data.length}
         getItem={getItem}
