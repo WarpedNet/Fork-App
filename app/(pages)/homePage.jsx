@@ -1,14 +1,14 @@
-import React from "react";
-import {useState, useEffect} from "react";
-import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context"; 
-import {Text, Image, View, Button, TouchableOpacity, VirtualizedList, ActivityIndicator} from "react-native";
-import { Avatar, Header} from "@rneui/base";
-import { SearchBar } from '@rneui/themed';
-import ForkComponent from "../../components/ForkComponent";
-import { router } from "expo-router";
-import RecipeIconDisplay from "../../components/RecipeIconDisplay";
-;
-// generating dummy data for a list
+import { View, Text, VirtualizedList, ActivityIndicator } from 'react-native'
+import { React, useState, useEffect } from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import * as SQLite from 'expo-sqlite'
+import { Divider } from '@rneui/base'
+import { Button, Header } from "@rneui/themed"
+import { router } from 'expo-router'
+
+
+export default function homePage() {
+    
 
 const getItem = (data, index) => ({
   id: data[index].id,
@@ -17,8 +17,6 @@ const getItem = (data, index) => ({
   icon: data[index].icon,
   });
 
-// this prop takes dummy data that can be replaced by SQL queries to show title and desc of recipe
-// ontouch will take user to recipe page by the ID of the recipe
 const Item = ({id, title, description, icon}) => (
   <View className="rounded-xl p-10" style={{height:100, marginVertical: 10, backgroundColor:'white', justifyContent: 'center', borderColor: 'grey', borderTopWidth: 2, borderBottomWidth: 2, borderLeftWidth:2, borderRightWidth:2}}>
     <TouchableOpacity onPress={()=>{router.push({pathname: '/recipeShowOnline/[pgRecipeName]', params: {recipeID: id}})}}>
@@ -29,11 +27,7 @@ const Item = ({id, title, description, icon}) => (
     <Image className="absolute right-20 w-10 h-10" source={(icon != null) ? {uri: "data:image/png;base64,"+icon} : require("../../assets/pie.jpg")}/>
   </View>
 )
-
-export default function viewOnline() { 
-  // Stores the recipies fetched from database
   const [recipes, setrecipes] = useState(null); 
-  // Fetches data from api on page load
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -45,6 +39,8 @@ export default function viewOnline() {
       }
       catch (error) {
         alert(`Failed to connect to API`);
+        router.back();
+        
       }
     }
     fetchRecipes()
@@ -59,32 +55,31 @@ export default function viewOnline() {
   // Prevents render until data is fetched (Man I love async)
   if (recipes == null) {
     return (<ActivityIndicator />)
-  }
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView className="bg-primary h-full w-full">
-        {/* big title for the thing */}
-        <Header backgroundColor="#00FF00" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} leftComponent={{icon: 'home', style:{fontSize: 20}}} centerComponent={{text: 'Home', style:{fontSize: 20, fontWeight: "bold"}}} />
-        <SearchBar platform={'android'} lightTheme={"true"} placeholder="Find Forks..." onChangeText={(e) => {search(e)}}/>
-        <Image className="absolute w-10 h-10" source={require('../../assets/pie.jpg')}/>
-        {/* for searchBar: search function for onChangeText */}
-        <Text className="text-center">Browse the forks, or:</Text>
-        <View style={[{width: "40%", position:"absolute", top:220, right:120, backgroundColor: "green"}]}>
-          <Button 
-          title="Create your Own!"
-          color="lime"
-           />
-        </View>
-        {/* creating a virtualized list, this is for saving memory when we have multiple recipes, it will only visualize a set amount at a time (in this case, 5) */}
+    }
+
+    return (
+    <SafeAreaView className="flex flex-col gap-4">
+            <View className=" relative w-3/5 h-1/9" >
+                <Text className="text-xl text-center font-bold">Welcome, User</Text>
+                <View className="flex flex-row">
+                <Button color="green" className="gap-10" buttonStyle={{borderRadius:5, width: 125}}>Account</Button>
+                <Text>                                      </Text>
+                <Button color="green" buttonStyle={{borderRadius:5, width: 125}}>Your Forks</Button>
+                </View>
+            </View>
+
+            <View className=" relative inset-y-0 w-full h-1/4 border-solid border-2 rounded">
+                <Text className="text-lg text-center font-bold">Popular Forks</Text>
         <VirtualizedList style={{flex:1, marginTop:50}}
         data={recipes}
-        initialNumToRender={5}
+        initialNumToRender={3}
         renderItem={({item}) => <RecipeIconDisplay id={item.item.id} title={item.item.title} description={item.item.description} icon={item.item.icon} />}
         keyExtractor={item => item.id}
         getItemCount={(data) => data.length}
         getItem={getItem}
         />
-      </SafeAreaView>
-    </SafeAreaProvider>
-  )
+            </View>
+
+    </SafeAreaView>
+    )
 }

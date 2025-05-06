@@ -74,6 +74,7 @@ useEffect(() => {
             <Divider width={3} color="black" className="align-bottom h-2/3"></Divider>
             <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
             <Rating showRating fractions="{1}" startingValue="{2.5}" />
+            <Button size="sm">Fork it!</Button>
             <Button className="dark:bg-secondary-300 w-[10vw] h-[10vw]" onPress={() => submitRating()}><Text className="text-center text-m">Submit Rating + Comment</Text></Button>
             </View>
           </View>
