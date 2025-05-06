@@ -74,8 +74,9 @@ export default function viewOnline() {
            />
         </View>
         {/* creating a virtualized list, this is for saving memory when we have multiple recipes, it will only visualize a set amount at a time (in this case, 5) */}
-        <VirtualizedList style={{flex:1, marginTop:50}}
+        <VirtualizedList style={{flex:1, marginVertical:50, height:10}}
         data={recipes}
+          windowSize={20}
         initialNumToRender={5}
         renderItem={({item}) => <Item id={item.id} title={item.title} description={item.description} icon={item.icon} />}
         keyExtractor={item => item.id}

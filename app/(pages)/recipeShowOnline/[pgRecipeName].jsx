@@ -63,19 +63,18 @@ useEffect(() => {
     <View>
     <SafeAreaView>
       <ScrollView className="h-full w-full">
-          <Text className="text-xl font-extrabold md: text-base font-bold text-center">{recipe.name}</Text>
-          <Image source={{uri: "data:image/png;base64,"+recipe.icon}} width={100} height={100}></Image>
+          <Image source={{uri: "data:image/png;base64,"+recipe.banner}} width={600} height={200}></Image>
+          <Text className="text-xl font-bold md: text-base font-bold text-center">{recipe.name}</Text>
           <Text>{recipe.description}</Text>
           <Text>{recipe.method}</Text>
-          <Image source={{uri: "data:image/png;base64,"+recipe.banner}} width={600} height={200}></Image>
-          <TextInput className="absolute bottom-0 left-0" maxLength={40} placeholder="Comment on this..."/>
           {/* Bottom Bar */}
-          <View className="h-2/4">
+          <View className="h-3/4">
             <Divider width={3} color="black" className="align-bottom h-2/3"></Divider>
-            <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
+            <View className="flex-col gap-8 justify-center items-center mb-4 mt-2">
             <Rating showRating fractions="{1}" startingValue="{2.5}" />
-            <Button size="sm">Fork it!</Button>
+          <TextInput maxLength={40} placeholder="Comment on this..."/>
             <Button className="dark:bg-secondary-300 w-[10vw] h-[10vw]" onPress={() => submitRating()}><Text className="text-center text-m">Submit Rating + Comment</Text></Button>
+            <Button size="sm" color="green" onPress={() => router.push("../recipeCreate/createRecipe")}>Fork it!</Button>
             </View>
           </View>
       </ScrollView>

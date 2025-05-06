@@ -59,9 +59,9 @@ export default index = () => {
         <View className="h-[10vh]">
           <Divider width={3} color="black" className="align-bottom"></Divider>
           <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
-            <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => { router.push("./login")}}><Text className="text-center text-xl">Log In</Text></Button>
-            <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => router.push("./register")}><Text className="text-center text-xl">Register</Text></Button>
-            <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => router.push("./homePage")}><Text className="text-center text-xl">Saved Recipes</Text></Button>
+            <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => { router.push("./login")}}><Text className="text-center text-white text-xl">Log In</Text></Button>
+            <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => router.push("./register")}><Text className="text-center text-white text-xl">Register</Text></Button>
+            <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => router.push("./homePage")}><Text className="text-center text-white text-xl">Saved Recipes</Text></Button>
           </View>
         </View>
       </View>

@@ -60,27 +60,27 @@ const Item = ({id, title, description, icon}) => {
   }
 
   return (
-  <SafeAreaView className="flex flex-col gap-4">
-    <View className=" relative w-3/5 h-1/9" >
-        <Text className="text-xl text-center font-bold">Welcome, User</Text>
-        <View className="flex flex-row">
-        <Button color="green" className="gap-10" buttonStyle={{borderRadius:5, width: 125}}>Account</Button>
-        <Text>                                      </Text>
+  <SafeAreaView className="bg-primary w-full h-full">
+    <View className=" relative " >
+        <Text className="text-xl text-center rounded-sm p-5 font-bold">Welcome, User</Text>
+        <View className="flex flex-row gap-5">
+        <Button color="green" onPress={() => router.push("./accounts/account")} buttonStyle={{borderRadius:5, width: 125}}>Account</Button>
         <Button color="green" buttonStyle={{borderRadius:5, width: 125}}>Your Forks</Button>
         </View>
     </View>
 
-    <View className=" relative inset-y-0 w-full h-1/4 border-solid border-2 rounded">
+    <View className="rounded-xl w-full h-full">
         <Text className="text-lg text-center font-bold">Popular Forks</Text>
-    </View>
-    <VirtualizedList style={{flex:1, marginTop:50}}
+    <VirtualizedList style={{flex:1, marginTop:10, marginLeft:10, width: 375}}
     data={recipes}
-    initialNumToRender={5}
+    initialNumToRender={10}
+      windowSize={100}
     renderItem={({item}) => <Item id={item.id} title={item.title} description={item.description} icon={item.icon} />}
     keyExtractor={item => item.id}
     getItemCount={(data) => data.length}
     getItem={getItem}
     />
+    </View>
 
   </SafeAreaView>
   )
