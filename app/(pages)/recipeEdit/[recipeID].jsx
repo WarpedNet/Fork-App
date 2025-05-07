@@ -95,8 +95,10 @@ const recipeEdit = () => {
           $id: recipeID});
       }
       finally {
-        statement.finalizeAsync()
-        router.push("../viewLocal");
+        await statement.finalizeAsync();
+        await db.closeAsync();
+        // router.push("../viewLocal");
+        router.back();
       }
     }
   }

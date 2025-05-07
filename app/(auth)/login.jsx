@@ -34,7 +34,7 @@ const login = () => {
       }
     }
     catch (error) {
-      alert("Error creating user: "+error);
+      alert("Error Logging in user: "+error);
     }
 }
   return (

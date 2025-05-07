@@ -94,9 +94,7 @@ const toggleIngredients = () => {
   // Saves the current recipe data locally to the device (recipe must have a name)
   // add ingredients to this func
   async function saveRecipeLocal() {
-    console.log("Called")
     if (recipe.name.length > 0) {
-      console.log("Called inside if")
       const db = await SQLite.openDatabaseAsync("fork.db");
       const statement = await db.prepareAsync('INSERT INTO forks (centralID, creator_name, name, description, method, banner, icon, count) VALUES ($centralID ,$creator_name, $name, $description, $method, $banner, $icon, $count);');
       try {
@@ -110,10 +108,11 @@ const toggleIngredients = () => {
           $icon: recipe.icon,
           $count: recipe.count
           //$ingredients: recipe.ingredients or whatever we call it in db
-        })
+        });
       }
       finally {
         await statement.finalizeAsync();
+        await db.closeAsync();
         router.push("../viewLocal");
       }
     }

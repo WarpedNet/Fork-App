@@ -26,7 +26,7 @@ async function createDatabase() {
     );
 
     CREATE TABLE IF NOT EXISTS ingredients(
-    id INTEGER  PRIMARY KEY NOT NULL,
+    id INTEGER PRIMARY KEY NOT NULL,
     name TEXT NOT NULL
     );
 
@@ -38,6 +38,8 @@ async function createDatabase() {
     FOREIGN KEY(ingredientid) REFERENCES ingredients(id)
     );
     `);
+    // console.log("Database Created")
+    await db.closeAsync();
 }
 
 export default index = () => {
@@ -61,7 +63,7 @@ export default index = () => {
           <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
             <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => { router.push("./login")}}><Text className="text-center text-white text-xl">Log In</Text></Button>
             <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => router.push("./register")}><Text className="text-center text-white text-xl">Register</Text></Button>
-            <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => router.push("./homePage")}><Text className="text-center text-white text-xl">Saved Recipes</Text></Button>
+            <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => router.push("./viewLocal")}><Text className="text-center text-white text-xl">Saved Recipes</Text></Button>
           </View>
         </View>
       </View>

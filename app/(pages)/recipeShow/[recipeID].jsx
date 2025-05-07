@@ -13,14 +13,17 @@ const recipeShow = () => {
   const [recipe, setrecipe] = useState(null);
 
   async function getRecipe() {
-    const db = await SQLite.openDatabaseAsync('fork.db');
-    const statement = await db.prepareAsync('SELECT * FROM forks WHERE id = $id;');
     try {
+      const db = await SQLite.openDatabaseAsync('fork.db');
+      const statement = await db.prepareAsync('SELECT * FROM forks WHERE id = $id;');
       const queryResult = await statement.executeAsync({$id: recipeID});
       setrecipe(await queryResult.getFirstAsync());
     }
+    catch (error) {
+      alert("Could not fetch recipe: "+error)
+    }
     finally {
-      statement.finalizeAsync();
+      await statement.finalizeAsync();
     }
   }
 
@@ -30,9 +33,13 @@ const recipeShow = () => {
     try {
       await statement.executeAsync({$id: recipe.id});
     }
+    catch (error) {
+      alert("Failed to delete recipe: "+error)
+    }
     finally {
       await statement.finalizeAsync();
-      router.push("../viewLocal");
+      await db.closeAsync();
+      router.replace("../viewLocal");
     }
   }
 
@@ -48,7 +55,7 @@ const recipeShow = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          token: userToken,
+          token: userToken, 
           centralID: recipe.centralID,
           parentID: null,
           recipeName: recipe.name,
