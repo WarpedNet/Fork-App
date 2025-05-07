@@ -11,19 +11,33 @@ const recipeShow = () => {
 
   const { recipeID } = useLocalSearchParams();
   const [recipe, setrecipe] = useState(null);
+  const [ingredients, setIngredients] = useState([]);
 
   async function getRecipe() {
+    const db = await SQLite.openDatabaseAsync('fork.db');
+    const statement = await db.prepareAsync('SELECT * FROM forks WHERE id = $id;');
+    const getRecipeIngredients = await db.prepareAsync('SELECT ingredientid FROM fork_ingredients WHERE forkid = $forkid;')
+    const getIngredients = await db.prepareAsync('SELECT * FROM ingredients WHERE id = $id')
     try {
-      const db = await SQLite.openDatabaseAsync('fork.db');
-      const statement = await db.prepareAsync('SELECT * FROM forks WHERE id = $id;');
       const queryResult = await statement.executeAsync({$id: recipeID});
       setrecipe(await queryResult.getFirstAsync());
+
+      var recipeIngredients = await (await getRecipeIngredients.executeAsync({$forkid: recipeID})).getAllAsync();
+      
+      recipeIngredients.forEach(async (id) => {
+        const ingredient = await (await getIngredients.executeAsync({$id: id.ingredientid})).getFirstAsync();
+        ingredients.push(ingredient);
+        await ingredient.resetAsync();
+      });
     }
     catch (error) {
       alert("Could not fetch recipe: "+error)
     }
     finally {
       await statement.finalizeAsync();
+      await getRecipeIngredients.finalizeAsync();
+      await getIngredients.finalizeAsync();
+      await db.closeAsync();
     }
   }
 
@@ -57,12 +71,13 @@ const recipeShow = () => {
         body: JSON.stringify({
           token: userToken, 
           centralID: recipe.centralID,
-          parentID: null,
+          parentID: recipe.parentID,
           recipeName: recipe.name,
           recipeDesc: recipe.description,
           recipeMethod: recipe.method,
           bannerImg: recipe.banner,
           icon: recipe.icon,
+          ingredients: ingredients
         }),
       });
 
@@ -78,9 +93,15 @@ const recipeShow = () => {
         try {
           await statement.executeAsync({centralID: centralID,id: recipe.id})
           alert("Fork Created!");
+
         }
-        catch {
-          alert("Failed to update local database!")
+        catch (error) {
+          alert("Failed to update local database!: "+error)
+        }
+        finally {
+          await statement.finalizeAsync();
+          await db.closeAsync();
+          router.back()
         }
       }
       else if (response.status == 401) {
@@ -113,7 +134,7 @@ const recipeShow = () => {
             <View className="h-[10vh]">
               <Divider width={3} color="black" className="align-bottom"></Divider>
               <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
-                <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => router.push(`../recipeEdit/${recipeID}`)}><Text className="text-center text-xl">Edit</Text></Button>
+                <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => router.replace(`../recipeEdit/${recipeID}`)}><Text className="text-center text-xl">Edit</Text></Button>
                 <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => uploadRecipe()}><Text className="text-center text-xl">Upload</Text></Button>
                 <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => deleteRecipe()}><Text className="text-center text-xl">Delete</Text></Button>
               </View>

@@ -20,6 +20,8 @@ const recipeShow = () => {
     icon: "",
     count: "",
   })
+
+  const [ingredients, setIngredients] = useState([]);
   const { recipeID } = useLocalSearchParams()
 
   const BackToHome = async() => {
@@ -48,8 +50,9 @@ const recipeShow = () => {
           method: data.method,
           banner: data.banner,
           icon: data.icon,
-          count: data.count,
+          count: data.count
         });
+        setIngredients(data.ingredients)
       }
       catch (error) {
         alert(`Failed to connect to API`);
@@ -61,10 +64,11 @@ const recipeShow = () => {
   async function saveRecipe() {
     
     const db = await SQLite.openDatabaseAsync("fork.db");
-    const statement = await db.prepareAsync('INSERT INTO forks (centralID, creator_name, name, description, method, banner, icon, count) VALUES ($centralID, $creator_name, $name, $description, $method, $banner, $icon, $count);');
+    const statement = await db.prepareAsync('INSERT INTO forks (centralID, parentID, creator_name, name, description, method, banner, icon, count) VALUES ($centralID, $parentID, $creator_name, $name, $description, $method, $banner, $icon, $count);');
     try {
       await statement.executeAsync({
-        $centralID: recipeID,
+        $centralID: null,
+        $parentID: recipeID,
         $creator_name: recipe.creatorName,
         $name: recipe.recipeName,
         $description: recipe.recipeDesc,
@@ -74,7 +78,6 @@ const recipeShow = () => {
         $count: recipe.count
       })
       alert("Recipe Forked!")
-      // router.replace("../homePage");
     }
     catch (error){
       alert("Error forking recipe: "+error)

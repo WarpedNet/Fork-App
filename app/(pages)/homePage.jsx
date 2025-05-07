@@ -57,27 +57,27 @@ const Item = ({id, title, description, icon}) => (
         <Text className="text-xl text-center rounded-sm p-5 font-bold">Welcome, User</Text>
         <View className="flex flex-col gap-5">
           <View className="flex flex-row gap-5">
-            <Button color="green" onPress={() => router.replace("./accounts/account")} buttonStyle={{borderRadius:5, width: 110, marginLeft:10, marginBottom: 10 }}>Account</Button>
+            <Button color="green" onPress={() => router.push("./accounts/account")} buttonStyle={{borderRadius:5, width: 110, marginLeft:10, marginBottom: 10 }}>Account</Button>
             <Button color="green" buttonStyle={{borderRadius:5, width: 110}}>Your Forks</Button>
-            <Button color="green" onPress={() => router.replace("./viewOnline")} buttonStyle={{borderRadius:5, width: 110}}>All Forks</Button>
+            <Button color="green" onPress={() => router.push("./viewOnline")} buttonStyle={{borderRadius:5, width: 110}}>All Forks</Button>
           </View>
           <View className="flex flex-row gap-5">
-            <Button color="green" onPress={() => router.replace("./viewLocal")} buttonStyle={{borderRadius:5, width: 110, marginLeft:10, marginBottom: 10 }}>Local Forks</Button>
+            <Button color="green" onPress={() => router.push("./viewLocal")} buttonStyle={{borderRadius:5, width: 110, marginLeft:10, marginBottom: 10 }}>Local Forks</Button>
           </View>
         </View>
     </View>
 
     <View className="rounded-xl w-full h-full">
-        <Text className="text-lg text-center font-bold">Popular Forks</Text>
-    <VirtualizedList style={{flex:1, marginTop:10, marginLeft:10, width: 375}}
-    data={recipes}
-    initialNumToRender={10}
-    windowSize={100}
-    renderItem={({item}) => <Item id={item.id} title={item.title} description={item.description} icon={item.icon} />}
-    keyExtractor={item => item.id}
-    getItemCount={(data) => data.length}
-    getItem={getItem}
-    />
+      <Text className="text-lg text-center font-bold">Popular Forks</Text>
+      <VirtualizedList style={{flex:1, marginTop:10, marginLeft:10, width: 375}}
+      data={recipes}
+      initialNumToRender={10}
+      windowSize={100}
+      renderItem={({item}) => <Item id={item.id} title={item.title} description={item.description} icon={item.icon} />}
+      keyExtractor={item => item.id}
+      getItemCount={(data) => data.length}
+      getItem={getItem}
+      />
     </View>
 
   </SafeAreaView>

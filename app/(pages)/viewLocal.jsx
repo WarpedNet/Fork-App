@@ -32,6 +32,37 @@ const viewLocal = () => {
   const deleteDB = async() => {
     try {
       await SQLite.deleteDatabaseAsync("fork.db")
+      const db = await SQLite.openDatabaseAsync('fork.db');
+      await db.execAsync(`
+        CREATE TABLE IF NOT EXISTS forks(
+        id INTEGER PRIMARY KEY NOT NULL,
+        centralID INTEGER,
+        parentID INTEGER,
+        creator_name TEXT,
+        name TEXT NOT NULL,
+        description TEXT,
+        method TEXT,
+        banner TEXT,
+        icon TEXT,
+        count INTEGER 
+        );
+
+        CREATE TABLE IF NOT EXISTS ingredients(
+        id INTEGER PRIMARY KEY NOT NULL,
+        name TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS fork_ingredients(
+        forkid INTEGER NOT NULL,
+        ingredientid INTEGER NOT NULL,
+        PRIMARY KEY(forkid, ingredientid),
+        FOREIGN KEY(forkid) REFERENCES forks(id),
+        FOREIGN KEY(ingredientid) REFERENCES ingredients(id)
+        );
+        `);
+        // console.log("Database Created")
+        await db.closeAsync();
+        router.back()
     }
     catch (error) {
       alert("Could not delete database: "+error)
@@ -92,7 +123,7 @@ const viewLocal = () => {
           {/* Bottom Bar */}
           <View className="h-[10vh]">
             <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
-              <Button className=" dark:bg-secondary w-[15vw] h-[15vw]" onPress={() => { router.navigate("./recipeCreate")}}><Text className="text-center text-xl">Create Recipe</Text></Button>
+              <Button className=" dark:bg-secondary w-[15vw] h-[15vw]" onPress={() => { router.replace("./recipeCreate")}}><Text className="text-center text-xl">Create Recipe</Text></Button>
               <Button className=" dark:bg-secondary w-[15vw] h-[15vw]" onPress={() => {deleteDB()}}><Text className="text-center text-xl">Delete All</Text></Button>
             </View>
           </View>

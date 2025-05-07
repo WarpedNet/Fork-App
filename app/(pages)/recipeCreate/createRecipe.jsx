@@ -22,10 +22,12 @@ const createRecipe = () => {
     method: "",
     banner: "",
     icon: "",
-    ingredients: "",
     count: null
   });
 
+  const [ingredients, setIngredients] = useState(null);
+  const [newIngredient, setNewIngredient] = useState("");
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   const [visible, setVisible] = useState(false);
 
@@ -43,7 +45,7 @@ const toggleIngredients = () => {
       quality: 1,
       allowsMultipleSelection: false,
       aspect: [aspectX,aspectY]
-    });
+  });
 
     // Resizes the image to better fit the use case and converts it to base64 for storage
     const resizedImage = await ImageManipulator.manipulateAsync(
@@ -73,33 +75,17 @@ const toggleIngredients = () => {
     setRecipe({...recipe, icon: image.base64});
   }
 
-
-  //function to allow the user to select ingredients (or pick new ones if they do not exist in the db)
-  //since this is a local db we can just save them locally
-  /*async function retrieveIngredients() {
-    const db = await.SQLite.openDatabaseAsync("fork.db");
-    const statement = await.db.prepareAsync('SELECT FROM forks (ingredients) VALUES ($ingredients)');
-    try {
-      await statement.executeAsync({
-        $ingredients = recipe.ingredients,
-      })
-    }
-    finally {
-      await statement.finalizeAsync();
-    }
-  }
-  */
-
-
   // Saves the current recipe data locally to the device (recipe must have a name)
   // add ingredients to this func
   async function saveRecipeLocal() {
     if (recipe.name.length > 0) {
       const db = await SQLite.openDatabaseAsync("fork.db");
-      const statement = await db.prepareAsync('INSERT INTO forks (centralID, creator_name, name, description, method, banner, icon, count) VALUES ($centralID ,$creator_name, $name, $description, $method, $banner, $icon, $count);');
+      const statement = await db.prepareAsync('INSERT INTO forks (centralID, parentID, creator_name, name, description, method, banner, icon, count) VALUES ($centralID, $parentID, $creator_name, $name, $description, $method, $banner, $icon, $count) RETURNING id;');
+      const saveIngredients = await db.prepareAsync('INSERT INTO fork_ingredients (forkid, ingredientid) VALUES ($forkid, $ingredientid)');
       try {
-        await statement.executeAsync({
+        const forkid = await (await statement.executeAsync({
           $centralID: null,
+          $parentID: null,
           $creator_name: recipe.creator_name,
           $name: recipe.name,
           $description: recipe.description,
@@ -107,20 +93,71 @@ const toggleIngredients = () => {
           $banner: recipe.banner,
           $icon: recipe.icon,
           $count: recipe.count
-          //$ingredients: recipe.ingredients or whatever we call it in db
-        });
+        })).getFirstAsync();
+        var recipeIngredients = selectedIngredients.map((index) => {return(ingredients[index].id)})
+        recipeIngredients.forEach(async (id) => {
+          try {
+            const insertIngredient = await saveIngredients.executeAsync({
+              $forkid: forkid.id,
+              $ingredientid: id
+            });
+            await insertIngredient.resetAsync();
+          }
+          catch (error) {
+            alert("Could not save ingredients: "+error)
+          }
+        })
+      }
+      catch (error) {
+        alert("Could not save recipe: "+error)
       }
       finally {
         await statement.finalizeAsync();
+        await saveIngredients.finalizeAsync();
         await db.closeAsync();
-        router.push("../viewLocal");
+        router.replace("../viewLocal");
       }
     }
     else {
       alert("Recipe Name is required!")
     }
   }
+  async function getIngredients() {
+    const db = await SQLite.openDatabaseAsync("fork.db");
+    try {
+      const data = await db.getAllAsync("SELECT * FROM ingredients")
+      setIngredients(data)
+    }
+    catch (error) {
+      alert("Could not fetch ingredients from database: "+error)
+    }
+    finally {
+      await db.closeAsync();
+    }
+  }
 
+  async function createNewIngredient() {
+    const db = await SQLite.openDatabaseAsync("fork.db");
+    const statement = await db.prepareAsync(`INSERT INTO ingredients (name) VALUES ($name)`);
+    try {
+      await statement.executeAsync({$name: newIngredient});
+    }
+    catch (error) {
+      alert("Could not update recipe: "+error)
+    }
+    finally {
+      await statement.finalizeAsync();
+      await db.closeAsync();
+      await getIngredients();
+    }
+  }
+  useEffect(() => {
+    getIngredients()
+  }, [])
+  
+  if (!ingredients) {
+    return (<View><Text>Loading...</Text></View>);
+  }
   return (
     <SafeAreaView>
       <View className="h-[50vh] w-full">
@@ -133,16 +170,14 @@ const toggleIngredients = () => {
           overlayStyle={{width:400, height:200}}
           backdropStyle={{opacity: 0.8}}>
 
-          <Input onChangeText={console.log("changed ingredient")/*(e) => setRecipe{... recipe, ingredients: e*/} placeholder="Add new ingredient"/>
-          <Button><Text>Add</Text></Button>
+          <Input value={newIngredient} onChangeText={(e) => {setNewIngredient(e)}} placeholder="Add new ingredient"/>
+          <Button onPress={() => {createNewIngredient()}}><Text>Add</Text></Button>
           <Divider width={2}></Divider>
-            <ButtonGroup buttons={['REPLACE', 'WITH', 'recipe.ingredients']}
-            onPress={(value) => {
-            //replace with a getRecipe call
-             console.log(value);
-
-            }}
-            />
+          <ButtonGroup buttons={(ingredients) ? ingredients.map((ingredient) => {return(ingredient.name)}) : null}
+          onPress={setSelectedIngredients}
+          selectMultiple
+          selectedIndexes={selectedIngredients}
+          />
         </Overlay>
 
 

@@ -63,7 +63,8 @@ const recipeEdit = () => {
         setRecipe(await queryResult.getFirstAsync());
     }
     finally {
-        statement.finalizeAsync()
+        await statement.finalizeAsync()
+        await db.closeAsync();
     }
   }
 
@@ -73,6 +74,7 @@ const recipeEdit = () => {
       const db = await SQLite.openDatabaseAsync("fork.db");
       const statement = await db.prepareAsync(`UPDATE forks SET
         centralID = $centralID,
+        parentID = $parentID,
         creator_name = $creator_name,
         name = $name,
         description = $description,
@@ -81,10 +83,12 @@ const recipeEdit = () => {
         icon = $icon,
         count = $count
         WHERE id = $id
-        `);
+      `);
       try {
+
         await statement.executeAsync({
           $centralID: recipe.centralID,
+          $parentID: recipe.parentID,
           $creator_name: recipe.creator_name,
           $name: recipe.name,
           $description: recipe.description,
@@ -94,10 +98,12 @@ const recipeEdit = () => {
           $count: recipe.count,
           $id: recipeID});
       }
+      catch (error) {
+        alert("Could not update recipe: "+error)
+      }
       finally {
         await statement.finalizeAsync();
         await db.closeAsync();
-        // router.push("../viewLocal");
         router.back();
       }
     }
