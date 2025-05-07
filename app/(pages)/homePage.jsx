@@ -5,7 +5,7 @@ import * as SQLite from 'expo-sqlite'
 import { Divider } from '@rneui/base'
 import { Button, Header } from "@rneui/themed"
 import { router } from 'expo-router'
-
+import * as SecureStore from 'expo-secure-store'
 
 export default function homePage() {
     
@@ -29,6 +29,8 @@ const Item = ({id, title, description, icon}) => (
 
 )
   const [recipes, setrecipes] = useState(null); 
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -37,6 +39,22 @@ const Item = ({id, title, description, icon}) => (
         const response = await fetch(`${api_address}/fork`);
         const data = await response.json();
         setrecipes(data);
+
+        const getUser = await fetch(`${api_address}/user`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({token: await SecureStore.getItemAsync("FORK_USER_TOKEN")}),
+        });
+        if (getUser.status == 401) {
+          alert("Invalid Token")
+          router.push("../(auth)/login")
+        }
+        else if (getUser.status == 200) {
+          setUser(await getUser.json());
+        }
       }
       catch (error) {
         alert(`Failed to connect to API`);
@@ -46,15 +64,14 @@ const Item = ({id, title, description, icon}) => (
     fetchRecipes()
   }, [])
   // Prevents render until data is fetched (Man I love async)
-  if (recipes == null) {
+  if (recipes == null || user == null) {
     return (<ActivityIndicator />)
   }
-
   return (
   <SafeAreaView className="bg-primary w-full h-full">
     <Header backgroundColor="green" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} centerComponent={{text: 'Home', style:{fontSize: 20, fontWeight: "bold"}}} />
     <View>
-        <Text className="text-xl text-center rounded-sm p-5 font-bold">Welcome, User</Text>
+        <Text className="text-xl text-center rounded-sm p-5 font-bold">Welcome, {user.username}</Text>
         <View className="flex flex-col gap-5">
           <View className="flex flex-row gap-5">
             <Button color="green" onPress={() => router.push("./accounts/account")} buttonStyle={{borderRadius:5, width: 110, marginLeft:10, marginBottom: 10 }}>Account</Button>

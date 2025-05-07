@@ -1,4 +1,4 @@
-import { View, Image } from 'react-native'
+import { View, Image, ScrollView } from 'react-native'
 import { React, useState, useEffect } from 'react'
 import { Text, Button } from '@rneui/themed'
 import { Divider } from '@rneui/base'
@@ -124,22 +124,21 @@ const recipeShow = () => {
   return (
     <View>
       <SafeAreaView>
-        <View className="h-full w-full">
-            <Text>{recipe.name}</Text>
-            <Image source={{uri: "data:image/png;base64,"+recipe.icon}} width={100} height={100}></Image>
-            <Text>{recipe.description}</Text>
-            <Text>{recipe.method}</Text>
+        <ScrollView className="h-full w-full">
             <Image source={{uri: "data:image/png;base64,"+recipe.banner}} width={600} height={200}></Image>
+            <Text className="text-xl font-bold md: text-base font-bold text-center">{recipe.recipeName}</Text>
+            <Text>{recipe.recipeDesc}</Text>
+            <Text>{recipe.method}</Text>
             {/* Bottom Bar */}
-            <View className="h-[10vh]">
-              <Divider width={3} color="black" className="align-bottom"></Divider>
-              <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
-                <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => router.replace(`../recipeEdit/${recipeID}`)}><Text className="text-center text-xl">Edit</Text></Button>
-                <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => uploadRecipe()}><Text className="text-center text-xl">Upload</Text></Button>
-                <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => deleteRecipe()}><Text className="text-center text-xl">Delete</Text></Button>
+            <View className="h-3/4">
+              <Divider width={3} color="black" className="align-bottom h-2/3"></Divider>
+              <View className="flex-col gap-8 justify-center items-center mb-4 mt-2">
+                <Button className="dark:bg-secondary-300 w-[10vw] h-[10vw]" onPress={() => {uploadRecipe()}}><Text className="text-center text-m">Upload Recipe</Text></Button>
+                <Button size="sm" color="green" onPress={() => router.replace('../recipeEdit/${recipeID}')}>Edit</Button>
+                <Button size="sm" color="green" onPress={() => {deleteRecipe()}}>Delete</Button>
               </View>
             </View>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   )
