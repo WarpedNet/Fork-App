@@ -134,7 +134,7 @@ const recipeShow = () => {
               <Divider width={3} color="black" className="align-bottom h-2/3"></Divider>
               <View className="flex-col gap-8 justify-center items-center mb-4 mt-2">
                 <Button className="dark:bg-secondary-300 w-[10vw] h-[10vw]" onPress={() => {uploadRecipe()}}><Text className="text-center text-m">Upload Recipe</Text></Button>
-                <Button size="sm" color="green" onPress={() => router.replace('../recipeEdit/${recipeID}')}>Edit</Button>
+                <Button size="sm" color="green" onPress={() => router.replace({pathname: "../recipeEdit/[recipeID]", params: {recipeID: recipeID}})}>Edit</Button>
                 <Button size="sm" color="green" onPress={() => {deleteRecipe()}}>Delete</Button>
               </View>
             </View>

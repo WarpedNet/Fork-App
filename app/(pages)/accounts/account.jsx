@@ -29,6 +29,11 @@ export default function Account(){
     }
   }
 
+  async function logout() {
+    await SecureStore.setItemAsync("FORK_USER_TOKEN", "");
+    router.replace("../..")
+  }
+
   useEffect(() => {
     getUser()
   }, [])
@@ -53,7 +58,7 @@ export default function Account(){
         </View>
 
         <View className="h-10 border-2 border-solid items-center">
-          <TouchableOpacity onPress={() => {console.log("Pushed logout")}}>
+          <TouchableOpacity onPress={() => {logout()}}>
             <Text>Logout</Text>
           </TouchableOpacity>
         </View>

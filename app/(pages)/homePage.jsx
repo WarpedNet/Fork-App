@@ -49,7 +49,7 @@ const Item = ({id, title, description, icon}) => (
           body: JSON.stringify({token: await SecureStore.getItemAsync("FORK_USER_TOKEN")}),
         });
         if (getUser.status == 401) {
-          alert("Invalid Token")
+          alert("Login Token Expired")
           router.push("../(auth)/login")
         }
         else if (getUser.status == 200) {
