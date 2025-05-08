@@ -5,6 +5,7 @@ import { Divider } from '@rneui/base'
 import { router, useLocalSearchParams, Redirect } from 'expo-router'
 import * as SQLite from 'expo-sqlite'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import * as SecureStore from 'expo-secure-store'
 
 
 //should change it so that it pushes here from the home one
@@ -22,6 +23,9 @@ const recipeShow = () => {
   })
 
   const [ingredients, setIngredients] = useState([]);
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(0);
+
   const { recipeID } = useLocalSearchParams()
 
   const BackToHome = async() => {
@@ -29,13 +33,48 @@ const recipeShow = () => {
   }
 
     //dummy funcs for the buttons to submit ratings + comments
-  const submitRating = async() => {
-      console.log("sent rating")
-    }
-
   const submitComment = async() => {
-      console.log("sent comment")
+    if (comment.length == 0) {
+      alert("Comment cannot be empty")
     }
+    else {
+      try {
+        const api_address = process.env.EXPO_PUBLIC_API_ADDRESS
+        const userToken = await SecureStore.getItemAsync("FORK_USER_TOKEN")
+
+        const response = await fetch(`${api_address}/comment`, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            token: userToken, 
+            forkID: recipeID,
+            comment: comment,
+            rating: rating
+          }),
+        });
+
+        if (response.status == 200) {
+          alert("Comment Submitted");
+          router.back();
+        }
+        else if (response.status == 401) {
+          alert("Invalid Token");
+          router.push("../../(auth)/login")
+        }
+      }
+      catch (error) {
+        alert("Could not create comment: "+error)
+      }
+    }
+  }
+  const ratingCompleted = (rating) => {
+    console.log(rating);
+    setRating(rating);
+  }
+
   useEffect(() => {
     async function getRecipe() {
       try {
@@ -103,9 +142,18 @@ const recipeShow = () => {
             <View className="h-3/4">
               <Divider width={3} color="black" className="align-bottom h-2/3"></Divider>
               <View className="flex-col gap-8 justify-center items-center mb-4 mt-2">
-              <Rating showRating fractions={0} startingValue="{0}" />
-            <TextInput maxLength={40} placeholder="Comment on this..."/>
-              <Button className="dark:bg-secondary-300 w-[10vw] h-[10vw]" onPress={() => submitRating()}><Text className="text-center text-m">Submit Rating + Comment</Text></Button>
+              <Rating 
+              fractions={0}
+              minValue={0}
+              onFinishRating={() =>
+                console.log("onFinishRating()")
+              }
+              showRating
+              startingValue={0}
+              />
+
+              <TextInput maxLength={40} value={comment} onChangeText={(e) => {setComment(e)}} placeholder="Comment on this..."/>
+              <Button className="dark:bg-secondary-300 w-[10vw] h-[10vw]" onPress={() => submitComment()}><Text className="text-center text-m">Submit Rating + Comment</Text></Button>
               <Button size="sm" color="green" onPress={() => {saveRecipe()}}>Fork it!</Button>
               </View>
             </View>

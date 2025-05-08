@@ -57,7 +57,7 @@ const Item = ({id, title, description, icon}) => (
         }
       }
       catch (error) {
-        alert(`Failed to connect to API`);
+        alert(`Failed to connect to API: `+error);
         router.back();
       }
     }
@@ -68,35 +68,35 @@ const Item = ({id, title, description, icon}) => (
     return (<ActivityIndicator />)
   }
   return (
-  <SafeAreaView className="bg-primary w-full h-full">
-    <Header backgroundColor="green" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} centerComponent={{text: 'Home', style:{fontSize: 20, fontWeight: "bold"}}} />
-    <View>
-        <Text className="text-xl text-center rounded-sm p-5 font-bold">Welcome, {user.username}</Text>
-        <View className="flex flex-col gap-5">
-          <View className="flex flex-row gap-5">
-            <Button color="green" onPress={() => router.push("./accounts/account")} buttonStyle={{borderRadius:5, width: 110, marginLeft:10, marginBottom: 10 }}>Account</Button>
-            <Button color="green" buttonStyle={{borderRadius:5, width: 110}}>Your Forks</Button>
-            <Button color="green" onPress={() => router.push("./viewOnline")} buttonStyle={{borderRadius:5, width: 110}}>All Forks</Button>
+    <SafeAreaView className="bg-primary w-full h-full">
+      <Header backgroundColor="green" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} centerComponent={{text: 'Home', style:{fontSize: 20, fontWeight: "bold"}}} />
+      <View>
+          <Text className="text-xl text-center rounded-sm p-5 font-bold">Welcome, {user.username}</Text>
+          <View className="flex flex-col gap-5">
+            <View className="flex flex-row gap-5">
+              <Button color="green" onPress={() => router.push("./accounts/account")} buttonStyle={{borderRadius:5, width: 110, marginLeft:10, marginBottom: 10 }}>Account</Button>
+              <Button color="green" buttonStyle={{borderRadius:5, width: 110}} onPress={() => {router.push("./viewUserForks")}}>Your Forks</Button>
+              <Button color="green" onPress={() => router.push("./viewOnline")} buttonStyle={{borderRadius:5, width: 110}}>All Forks</Button>
+            </View>
+            <View className="flex flex-row gap-5">
+              <Button color="green" onPress={() => router.push("./viewLocal")} buttonStyle={{borderRadius:5, width: 110, marginLeft:10, marginBottom: 10 }}>Local Forks</Button>
+            </View>
           </View>
-          <View className="flex flex-row gap-5">
-            <Button color="green" onPress={() => router.push("./viewLocal")} buttonStyle={{borderRadius:5, width: 110, marginLeft:10, marginBottom: 10 }}>Local Forks</Button>
-          </View>
-        </View>
-    </View>
+      </View>
 
-    <View className="rounded-xl w-full h-full">
-      <Text className="text-lg text-center font-bold">Popular Forks</Text>
-      <VirtualizedList style={{flex:1, marginTop:10, marginLeft:10, width: 375}}
-      data={recipes}
-      initialNumToRender={10}
-      windowSize={100}
-      renderItem={({item}) => <Item id={item.id} title={item.title} description={item.description} icon={item.icon} />}
-      keyExtractor={item => item.id}
-      getItemCount={(data) => data.length}
-      getItem={getItem}
-      />
-    </View>
+      <View className="rounded-xl w-full h-full">
+        <Text className="text-lg text-center font-bold">Popular Forks</Text>
+        <VirtualizedList style={{flex:1, marginTop:10, marginLeft:10, width: 375}}
+        data={recipes}
+        initialNumToRender={10}
+        windowSize={100}
+        renderItem={({item}) => <Item id={item.id} title={item.title} description={item.description} icon={item.icon} />}
+        keyExtractor={item => item.id}
+        getItemCount={(data) => data.length}
+        getItem={getItem}
+        />
+      </View>
 
-  </SafeAreaView>
+    </SafeAreaView>
   )
 }

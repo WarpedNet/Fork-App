@@ -9,6 +9,7 @@ const tabLayout = () => {
             <Stack.Screen name="recipeShowOnline" options={{headerShown: false}}/>
             <Stack.Screen name="recipeCreate" options={{headerShown: false}}/>
             <Stack.Screen name="viewOnline" options={{headerShown: false}}/>
+            <Stack.Screen name="viewUserForks" options={{headerShown: false}}/>
             <Stack.Screen name="homePage" options={{headerShown: false}} />
         </Stack>
         

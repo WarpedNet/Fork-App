@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context"
-import { View, Text, TouchableOpacity, Appearance, useColorScheme, ScrollView, Image } from "react-native"
+import { View, Text, Appearance, useColorScheme, Image } from "react-native"
 import { router } from "expo-router"
-import {useEffect } from "react"
+import { useEffect } from "react"
 import { Divider, Header } from "@rneui/base"
 import { Button } from "@rneui/themed"
 import * as SQLite from 'expo-sqlite'
@@ -9,7 +9,6 @@ import * as SQLite from 'expo-sqlite'
 // 
 // Main page the user sees when opening the app.
 // 
-
 async function createDatabase() {
   const db = await SQLite.openDatabaseAsync('fork.db');
   await db.execAsync(`
@@ -43,8 +42,8 @@ async function createDatabase() {
     await db.closeAsync();
 }
 
-export default index = () => {
-  let colorScheme = useColorScheme();
+export default function index() {
+
   useEffect(() => {
     createDatabase();
   }, [])
@@ -62,14 +61,12 @@ export default index = () => {
         <View className="h-[10vh]">
           <Divider width={3} color="black" className="align-bottom"></Divider>
           <View className="flex-row gap-8 justify-center items-center mb-4 mt-2">
-            <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => { router.push("./login")}}><Text className="text-center text-white text-xl">Log In</Text></Button>
+            <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => { router.push("./login")}} title="login"><Text className="text-center text-white text-xl" data-testid="login">Log In</Text></Button>
             <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => router.push("./register")}><Text className="text-center text-white text-xl">Register</Text></Button>
             <Button color="green" className=" w-[15vw] h-[15vw]" onPress={() => router.push("./viewLocal")}><Text className="text-center text-white text-xl">Saved Recipes</Text></Button>
           </View>
         </View>
       </View>
-
     </SafeAreaView>
   )
-
 }
