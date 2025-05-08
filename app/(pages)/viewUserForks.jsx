@@ -74,7 +74,7 @@ export default function viewOnline() {
       <SafeAreaView className="bg-primary h-full w-full">
         {/* big title for the thing */}
         <Header backgroundColor="green" containerStyle={{alignItems:'center', marginBottom:20, width: '100%', paddingVertical: 5}} centerComponent={{text: 'All Forks', style:{fontSize: 20, fontWeight: "bold"}}} />
-        <Image className="absolute w-10 h-10" source={require('../../assets/pie.jpg')}/>
+        {/* <Image className="absolute w-10 h-10" source={require('../../assets/pie.jpg')}/> */}
         {/* for searchBar: search function for onChangeText */}
         <View style={[{width: "40%", position:"absolute", top:220, right:120, backgroundColor: "green"}]}>
           <Button 

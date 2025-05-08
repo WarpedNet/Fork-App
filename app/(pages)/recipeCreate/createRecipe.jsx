@@ -20,8 +20,8 @@ const createRecipe = () => {
     name: "",
     description: "",
     method: "",
-    banner: "",
-    icon: "",
+    banner: null,
+    icon: null,
     count: null
   });
 
@@ -184,11 +184,11 @@ const toggleIngredients = () => {
         <Input value={recipe.method} onChangeText={(e) => setRecipe({...recipe, method: e})} placeholder="Method. Use commas to separate your steps, and be concise!"/>
           <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => getIconImage()}><Text className="text-center text-xl">Icon Image</Text></Button>
           <View className="h-[10vh] w-full justify-center items-center"> 
-            <Image source={{uri: "data:image/png;base64,"+recipe.icon}} width={100} height={100}></Image>
+            <Image source={(recipe.icon != null) ? {uri: "data:image/png;base64,"+recipe.icon} : require("../../../assets/pie.jpg")} width={100} height={100}></Image>
             </View>
           <Button className=" dark:bg-secondary-300 w-[15vw] h-[15vw]" onPress={() => getBannerImage()}><Text className="text-center text-xl">Banner Image</Text></Button>
           <View className="h-[10vh] w-full justify-center items-center">
-          <Image source={{uri: "data:image/png;base64,"+recipe.banner}} width={300} height={100}></Image>
+          <Image source={(recipe.banner != null) ? {uri: "data:image/png;base64,"+recipe.banner} : require("../../../assets/pie.jpg")} width={300} height={100}></Image>
           </View>
 
           {/* Bottom Bar */}

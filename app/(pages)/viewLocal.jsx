@@ -73,7 +73,7 @@ const viewLocal = () => {
     return (
       <View className="mx-5 my-2 justify-center items-center">
         <TouchableOpacity onPress={()=>{router.replace({pathname: '/recipeShow/[recipeID]', params: {recipeID: ID}})}}>
-          <Image source={{uri: "data:image/png;base64,"+icon}} width={100} height={100} className="bg-secondary-200"></Image>
+          <Image source={(icon != null) ? {uri: "data:image/png;base64,"+icon} : require("../../assets/pie.jpg")} width={100} height={100} className="bg-secondary-200"></Image>
         </TouchableOpacity>
         <Text>{recipeName}</Text>
       </View>
