@@ -44,7 +44,7 @@ const login = () => {
             <Image source={require("../../assets/forkLogo.png")} className="w-10" resizeMethod="scale" resizeMode="contain"/>
           </View>
       <View className="h-full justify-center items-center space-y-4">
-        <Text className="text-4xl text-white font-bold my-6">Log In</Text>
+        <Text className="text-4xl text-black font-bold my-6">Log In</Text>
 
         {/* input fields for username and password */}
         <CustomInputField name="Username" placeholder="Username" changeText={(e) => setformField({...formField, username: e})} value={formField.username}/>
@@ -54,11 +54,11 @@ const login = () => {
         <View className="flex-col space-y-4 justify-center items-center">
 
           {/* text field and button for registering a new account*/}
-          <Text className="text-base text-white px-3 py-2">Don't have an account? <Link href="./register" className="text-secondary-100">Register Here</Link></Text>
+          <Text className="text-base text-black px-3 py-2">Don't have an account? <Link href="./register" className="text-secondary-100">Register Here</Link></Text>
 
           {/* temporary alert response to show user input based on log in button press */}
           <TouchableOpacity className="bg-secondary rounded-full px-3 py-2" onPress={() => {loginUser()}}>
-            <Text className="text-white text-2xl">Log In</Text>
+            <Text className="text-black text-2xl">Log In</Text>
           </TouchableOpacity>
         </View>
       </View>

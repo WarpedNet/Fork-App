@@ -1,0 +1,33 @@
+appId: "com.cjbreen.Fork"
+---
+- launchApp
+- assertVisible: "Log In"
+- assertVisible: "Register"
+- assertVisible: "Saved Recipes"
+- tapOn: "Saved Recipes"
+- assertVisible: "Create Recipe"
+- assertVisible: "Delete All"
+- assertVisible: "homePage"
+- tapOn: "Create Recipe"
+- tapOn: "Your Recipe Name"
+- inputText: "MaestroTest"
+- tapOn: "Description.*"
+- inputRandomText
+- tapOn: "Method.*"
+- inputRandomText
+- tapOn: "Add Ingredients"
+- tapOn: "Add new ingredient"
+- inputText: "Tomato"
+- tapOn: "Add"
+- eraseText
+- assertVisible: "Tomato"
+- tapOn:
+    text: "Tomato"
+    index: 1
+- tapOn:
+    point: 50%,25%
+- tapOn:
+    point: 41%,86%
+- assertVisible: "MaestroTest"
+- tapOn: "Delete All"
+- stopApp

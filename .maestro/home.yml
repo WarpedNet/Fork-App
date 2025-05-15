@@ -1,0 +1,7 @@
+appId: com.cjbreen.Fork
+---
+- launchApp
+- assertVisible: "Log In"
+- assertVisible: "Register"
+- assertVisible: "Saved Recipes"
+- stopApp

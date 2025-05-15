@@ -126,8 +126,8 @@ const recipeShow = () => {
       <SafeAreaView>
         <ScrollView className="h-full w-full">
             <Image source={(recipe.banner != null) ? {uri: "data:image/png;base64,"+recipe.banner} : require("../../../assets/pie.jpg")} width={600} height={200}></Image>
-            <Text className="text-xl font-bold md: text-base font-bold text-center">{recipe.recipeName}</Text>
-            <Text>{recipe.recipeDesc}</Text>
+            <Text className="text-xl font-bold md: text-base font-bold text-center">{recipe.name}</Text>
+            <Text>{recipe.description}</Text>
             <Text>{recipe.method}</Text>
             {/* Bottom Bar */}
             <View className="h-3/4">
