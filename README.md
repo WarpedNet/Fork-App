@@ -28,3 +28,5 @@
 - tailwind for css
 - native react with expo framework for app
 - React native + expo + tailwind css + sqllite(client side) + postgresql(server side)
+## Environment
+EXPO_PUBLIC_API_ADDRESS = https://server:port
