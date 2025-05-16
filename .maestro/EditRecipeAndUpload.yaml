@@ -1,0 +1,72 @@
+appId: com.cjbreen.Fork
+---
+- launchApp
+- tapOn: "Register"
+- tapOn: "Username"
+- inputText: "MaestroTest"
+- tapOn: "Email Address"
+- inputText: "MaestroTest@test.com"
+- tapOn: "Password"
+- inputText: "MaestroTest"
+- tapOn:
+    text: "Register"
+    index: 1
+- tapOn: "Username"
+- inputText: "MaestroTest"
+- tapOn: "Password"
+- inputText: "MaestroTest"
+- tapOn:
+    text: "Log In"
+    index: 1
+- assertVisible: "Welcome, MaestroTest"
+- tapOn: "Local Forks"
+- tapOn: "Create Recipe"
+- tapOn: "Your Recipe Name"
+- inputText: "MaestroTest"
+- tapOn: "Description. 30 words max!"
+- "inputRandomText"
+- tapOn: "Method. Use commas to separate your steps, and be concise!"
+- "inputRandomText"
+- tapOn:
+    point: "37%,86%"
+- assertVisible: "MaestroTest"
+- tapOn:
+    containsChild: "MaestroTest"
+- tapOn: "Upload Recipe"
+- assertVisible: "Fork Created!"
+- tapOn: "OK"
+- tapOn: "Local Forks"
+- tapOn:
+    containsChild: "MaestroTest"
+- tapOn:
+    point: "50%,45%"
+- tapOn: "homePage"
+- tapOn: "Your Forks"
+- assertVisible: "MaestroTest"
+- tapOn: "MaestroTest"
+- tapOn:
+    point: "50%,83%"
+- assertVisible: "Recipe Forked!"
+- tapOn: "OK"
+- "back"
+- tapOn: "Local Forks"
+- assertVisible: "MaestroTest"
+- tapOn:
+    containsChild: "MaestroTest"
+- tapOn:
+    point: "51%,39%"
+- tapOn: "MaestroTest"
+- "eraseText"
+- inputText: "MaestroTestEdit"
+- tapOn:
+    point: "40%,82%"
+- tapOn: "Local Forks"
+- assertVisible: "MaestroTestEdit"
+- tapOn:
+    containsChild: "MaestroTestEdit"
+- tapOn: "Upload Recipe"
+- assertVisible: "Fork Created!"
+- tapOn: "OK"
+- tapOn: "Your Forks"
+- assertVisible: "MaestroTestEdit"
+- stopApp
